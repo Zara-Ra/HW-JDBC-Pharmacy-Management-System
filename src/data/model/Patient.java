@@ -1,4 +1,4 @@
 package data.model;
 
-public class Patient extends User {
+public class Patient extends Role {
 }

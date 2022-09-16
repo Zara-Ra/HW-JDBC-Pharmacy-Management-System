@@ -6,4 +6,5 @@ public class Prescription {
     private int ID;
     private Patient patient;
     private List<Medicine> medicineList;
+    private double totalPrice;
 }
