@@ -7,4 +7,5 @@ public class Prescription {
     private Patient patient;
     private List<Medicine> medicineList;
     private double totalPrice;
+    private boolean isConfirmed;
 }

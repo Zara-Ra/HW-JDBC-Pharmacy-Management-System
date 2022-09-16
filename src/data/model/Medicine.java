@@ -8,8 +8,8 @@ public class Medicine {
     private boolean isAvailable;
     private String genericName;
     private String commercialName;
+    private int dose;
     private UsageType usageType;
     private MedType medType;
-    private int dose;
     private double price;
 }
