@@ -87,7 +87,7 @@ public class PrescriptionDao {
     }
 
     public void deletePrescription(Prescription prescription) {
-        String sql = "DELETE FROM prescription WHERE ";
+        String sql = "DELETE FROM prescription WHERE ";//TODO
     }
 
     public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
