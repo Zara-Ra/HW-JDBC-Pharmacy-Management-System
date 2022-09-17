@@ -1,4 +1,38 @@
 package data.model;
 
 public class Patient extends Role {
+    String phone;//Todo validate
+    String address;
+    String email;//Todo validate email@domain.com
+
+    public Patient(String username, String password, String email, String phone, String address) {
+        super(username, password);
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

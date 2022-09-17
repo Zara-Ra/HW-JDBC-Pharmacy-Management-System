@@ -8,14 +8,17 @@ public class DBHelper {
     private static final String DB_URL = "jdbc:postgresql://localhost/HW7";
     private static final String USER = "postgres";
     private static final String PASS = "zara12";
-    private Connection connection;
-    public  Connection getConnection() {
+    private static Connection connection = makeConnection();
+    private static Connection makeConnection() {
 
         try {
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return connection;
+    }
+    public static Connection getConnection(){
         return connection;
     }
     public void closeConnection(){
