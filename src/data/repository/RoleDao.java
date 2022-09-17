@@ -26,6 +26,9 @@ public class RoleDao {
         preparedStatement.setString(2,newRole.getPassword());
         if(newRole instanceof Admin) {
             preparedStatement.setString(3, ((Admin) newRole).getEmail());
+            preparedStatement.setString(4,null);
+            preparedStatement.setString(5,null);
+
         } else if (newRole instanceof Patient) {
             preparedStatement.setString(3, ((Patient)newRole).getEmail());
             preparedStatement.setString(4,((Patient)newRole).getPhone());

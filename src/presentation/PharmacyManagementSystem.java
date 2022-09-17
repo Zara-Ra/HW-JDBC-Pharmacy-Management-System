@@ -1,7 +1,9 @@
 package presentation;
 
+import data.model.Admin;
 import data.model.Patient;
 import data.model.Role;
+import data.model.enums.RoleType;
 import service.AdminService;
 import service.PatientService;
 
@@ -14,33 +16,45 @@ public class PharmacyManagementSystem {
     private PatientService patientService = PatientService.getInstance();
     private AdminService adminService = AdminService.getInstance();
     public void firstMenu() throws SQLException {
-        signIn();
-        //signUp();
+        //signUp(RoleType.ADMIN);
+        signIn(RoleType.ADMIN);
+        //signIn(RoleType.PATIENT);
+
     }
 
-    private void signIn() throws SQLException {
+    private boolean signIn(RoleType roleType) throws SQLException {
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-
-        role = patientService.signIn(username,password);
-        System.out.println(role);
+        if(roleType == RoleType.PATIENT)
+            role = patientService.signIn(username,password);
+        else if (roleType == RoleType.ADMIN) {
+            role = adminService.signIn(username,password);
+        }
+        if(role != null)
+            return true;
+        else
+            return false;
     }
 
-    private void signUp() throws SQLException {
+    private void signUp(RoleType roleType) throws SQLException {
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        System.out.println("Enter phone number: ");
-        String phone = scanner.nextLine();
-        System.out.println("Enter address: ");
-        String address = scanner.nextLine();
         System.out.println("Enter email: ");
         String email = scanner.nextLine();
-
-        role = new Patient(username,password,email,phone,address);
-        role = patientService.signUp(role);
+        if(roleType == RoleType.PATIENT) {
+            System.out.println("Enter phone number: ");
+            String phone = scanner.nextLine();
+            System.out.println("Enter address: ");
+            String address = scanner.nextLine();
+            role = new Patient(username, password, email, phone, address);
+            role = patientService.signUp(role);
+        } else if (roleType == RoleType.ADMIN) {
+            role = new Admin(username,password,email);
+            role = adminService.signUp(role);
+        }
     }
 }

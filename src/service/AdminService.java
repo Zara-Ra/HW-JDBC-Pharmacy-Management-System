@@ -37,7 +37,12 @@ public class AdminService implements RoleService {
     }
 
     @Override
-    public Role signUp(Role newRole) {
+    public Role signUp(Role newRole) throws SQLException {
+        if (roleDao.signUp(newRole)) {
+            int roleID = roleDao.findRoleID(newRole.getUsername());
+            newRole.setID(roleID);
+            return newRole;
+        }
         return null;
     }
 }
