@@ -46,6 +46,29 @@ public class PrescriptionDao {
         return prescriptionList;
     }
 
+    public List<Prescription> allConfirmedPrescriptions(int patientID) throws SQLException {
+        List<Prescription> prescriptionList = null;
+        String sql = "SELECT id,patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10 FROM prescription WHERE is_confirmed = true AND patient_id =?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,patientID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int prescriptionID = resultSet.getInt(1);
+            int pID = resultSet.getInt(2);
+            double totalPrice = resultSet.getDouble(3);
+            List<Medicine> medicineList = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                int medicineID = resultSet.getInt(i + 4);
+                Medicine medicine = medicineDao.findMedicineByID(medicineID);
+                medicineList.add(medicine);
+            }
+            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList);
+            prescriptionList.add(prescription);
+        }
+
+        return prescriptionList;
+    }
+
     public void addPrescription(Prescription prescription) throws SQLException {
         String sql = "INSERT INTO prescription(patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10,is_confirmed) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -59,5 +82,12 @@ public class PrescriptionDao {
         }
         preparedStatement.setBoolean(12,prescription.isConfirmed());
         preparedStatement.executeUpdate();
+    }
+
+    public void deletePrescription(Prescription prescription) {
+        String sql = "DELETE FROM prescription WHERE ";
+    }
+
+    public void editPrescription(Prescription prescription) {
     }
 }

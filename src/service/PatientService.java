@@ -3,7 +3,6 @@ package service;
 import data.model.Prescription;
 import data.model.Role;
 import data.model.enums.RoleType;
-import data.repository.MedicineDao;
 import data.repository.PrescriptionDao;
 import data.repository.RoleDao;
 
@@ -27,16 +26,17 @@ public class PatientService implements RoleService {
         prescriptionDao.addPrescription(prescription);
     }
 
-    public void editPrescription() {
-
+    public void editPrescription(Prescription prescription) {
+        prescriptionDao.editPrescription(prescription);
     }
 
-    public void deletePrescription() {
+    public void deletePrescription(Prescription prescription) {
+        prescriptionDao.deletePrescription(prescription);
     }
 
-    public List<Prescription> displayConfirmedPrescriptions() throws SQLException {
+    public List<Prescription> displayConfirmedPrescriptions(int patientID) throws SQLException {
         boolean confirmedPresciptions = true;
-        return prescriptionDao.allPrescription(confirmedPresciptions);
+        return prescriptionDao.allConfirmedPrescriptions(patientID);
     }
 
     @Override
