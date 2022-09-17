@@ -97,4 +97,15 @@ public class Medicine {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "\nAvailablity: " + isAvailable +
+                "\tGeneric Name: " + genericName +
+                "\tCommercial Name: " + commercialName +
+                "\tDose: " + dose +
+                "\tUsage Type: " + usageType +
+                "\tMedicine Type: " + medType +
+                "\tprice: " + price ;
+    }
 }

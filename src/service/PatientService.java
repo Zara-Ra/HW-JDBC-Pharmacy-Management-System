@@ -1,5 +1,6 @@
 package service;
 
+import data.model.Medicine;
 import data.model.Prescription;
 import data.model.Role;
 import data.model.enums.RoleType;
@@ -26,16 +27,11 @@ public class PatientService implements RoleService {
         prescriptionDao.addPrescription(prescription);
     }
 
-    public void editPrescription(Prescription prescription) {
-        prescriptionDao.editPrescription(prescription);
-    }
-
     public void deletePrescription(Prescription prescription) {
         prescriptionDao.deletePrescription(prescription);
     }
 
     public List<Prescription> displayConfirmedPrescriptions(int patientID) throws SQLException {
-        boolean confirmedPresciptions = true;
         return prescriptionDao.allConfirmedPrescriptions(patientID);
     }
 
@@ -58,5 +54,16 @@ public class PatientService implements RoleService {
             return newRole;
         }
         return null;
+    }
+    public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
+        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
+    }
+
+    public void addMedicineToPrescription(Prescription prescription, Medicine medicine)throws SQLException  {
+        prescriptionDao.addMedicineToPrescription(prescription,medicine);
+    }
+
+    public List<Prescription> displayAllUserPrescriptions(int patientID) throws SQLException {
+        return prescriptionDao.allUserPrescriptions(patientID);
     }
 }

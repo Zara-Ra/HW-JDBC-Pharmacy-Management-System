@@ -27,8 +27,8 @@ public class PharmacyManagementSystem {
         displayConfirmedPrescription();
     }
 
-    private void displayConfirmedPrescription() throws SQLException {
-        List<Prescription> prescriptionList = patientService.displayConfirmedPrescriptions(role.getID());
+    private void displayAllUserPrescriptions() throws SQLException {
+        List<Prescription> prescriptionList = patientService.displayAllUserPrescriptions(role.getID());
         for (int i = 0; i < prescriptionList.size(); i++) {
             System.out.println(i + " : " + prescriptionList.get(i));
         }
@@ -43,29 +43,72 @@ public class PharmacyManagementSystem {
                 System.out.println("Press 1 --> Edit Prescription");
                 System.out.println("Press 2 --> Delete Prescription");
                 int editDelete = Integer.parseInt(scanner.nextLine());
-                if (editDelete == 1)
-                    editPrescription(prescription);
-                else if (editDelete == 2)
-                    deletePrescription(prescription);
-            }
-            else {
+                switch (editDelete) {
+                    case 1:
+                        editPrescription(prescription);
+                        break;
+                    case 2:
+                        deletePrescription(prescription);
+                        break;
+                    default:
+                        break;
+                }
+            } else {
                 System.out.println("Invalid Number Entered");
                 firstMenu();
             }
         } else
             firstMenu();
     }
-    private void editPrescription(Prescription prescription){
-        patientService.editPrescription(prescription);
+
+    private void displayConfirmedPrescription() throws SQLException {
+        List<Prescription> prescriptionList = patientService.displayConfirmedPrescriptions(role.getID());
+        for (int i = 0; i < prescriptionList.size(); i++) {
+            System.out.println(i + " : " + prescriptionList.get(i));
+        }
     }
-    private void deletePrescription(Prescription prescription){
+
+    private void editPrescription(Prescription prescription) throws SQLException {
+        System.out.println("Press 1 --> Delete a Medicine From Prescription");
+        System.out.println("Press 2 --> Add a Medicine To Prescription");
+        int choice = Integer.parseInt(scanner.nextLine());
+        switch (choice) {
+            case 1:
+                showMedicineInPrescription(prescription);
+                System.out.println("Enter Medicine number to Delete from Prescription");
+                int deleteMedicineNum = Integer.parseInt(scanner.nextLine());
+                patientService.deleteMedicineFromPrescription(deleteMedicineNum + 1, prescription);
+                prescription.getMedicineList().remove(deleteMedicineNum);
+                break;
+            case 2:
+                System.out.println("Enter the Commercial Name of the Medicine: ");
+                String commercialName = scanner.nextLine();
+                Medicine medicine = patientService.findMedicine(commercialName);
+                prescription.getMedicineList().add(medicine);
+                patientService.addMedicineToPrescription(prescription,medicine);
+                break;
+            default:
+                System.out.println("Invalid number");
+                firstMenu();
+                break;
+        }
+    }
+
+    private void showMedicineInPrescription(Prescription prescription) {
+        for (int i = 0; i < prescription.getMedicineList().size(); i++) {
+            System.out.println(i + " " + prescription.getMedicineList().get(i));
+        }
+
+    }
+
+    private void deletePrescription(Prescription prescription) {
         patientService.deletePrescription(prescription);
     }
 
     private void addPrescription() throws SQLException {
         List<Medicine> medicineList = new ArrayList<>();
         Prescription prescription = new Prescription(role.getID(), medicineList, false);
-        System.out.println("How many Medicines do need?(1 - 10)");
+        System.out.println("How many Medicines do you need?(1 - 10)");
         int numOfMeds = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < numOfMeds; i++) {
             System.out.println("Enter the Commercial Name of the No." + (i + 1) + " Medicine: ");

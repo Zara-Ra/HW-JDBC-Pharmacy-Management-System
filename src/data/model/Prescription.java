@@ -60,4 +60,11 @@ public class Prescription {
     public void setConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
     }
+
+    @Override
+    public String toString() {
+        return "Prescription Info:" + "\n Medicines:" + medicineList +
+                "\n totalPrice = " + totalPrice +
+                " Confirmed :" + isConfirmed;
+    }
 }
