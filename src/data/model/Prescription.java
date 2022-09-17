@@ -15,6 +15,11 @@ public class Prescription {
         this.medicineList = medicineList;
     }
 
+    public Prescription(int patientID, List<Medicine> medicineList) {
+        this.patientID = patientID;
+        this.medicineList = medicineList;
+    }
+
     public int getID() {
         return ID;
     }

@@ -23,7 +23,8 @@ public class PatientService implements RoleService {
     private PrescriptionDao prescriptionDao = PrescriptionDao.getInstance();
     private RoleDao roleDao = RoleDao.getInstance();
 
-    public void addPrescription() {
+    public void addPrescription(Prescription prescription) throws SQLException {
+        prescriptionDao.addPrescription(prescription);
     }
 
     public void editPrescription() {

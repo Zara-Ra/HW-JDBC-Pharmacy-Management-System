@@ -4,7 +4,8 @@ public enum UsageType {
     ORALPILL(1,"Oral Pill"),
     ORALCAPSUL(2, "Oral Capsul"),
     INJECTION(3,"Injection"),
-    DERMAL(4, "Dermal");
+    DERMAL(4, "Dermal"),
+    SYRYP(5,"Syryp");
     private int num;
     private String name;
     UsageType(int num, String name){

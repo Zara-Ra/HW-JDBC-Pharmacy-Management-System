@@ -1,9 +1,6 @@
 package presentation;
 
-import data.model.Admin;
-import data.model.Medicine;
-import data.model.Patient;
-import data.model.Role;
+import data.model.*;
 import data.model.enums.MedType;
 import data.model.enums.RoleType;
 import data.model.enums.UsageType;
@@ -11,6 +8,8 @@ import service.AdminService;
 import service.PatientService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PharmacyManagementSystem {
@@ -21,8 +20,23 @@ public class PharmacyManagementSystem {
     public void firstMenu() throws SQLException {
         //signUp(RoleType.ADMIN);
         //signIn(RoleType.ADMIN);
-        //signIn(RoleType.PATIENT);
-        addMedicine();
+        signIn(RoleType.PATIENT);
+        //addMedicine();
+        addPrescription();
+    }
+
+    private void addPrescription() throws SQLException {
+        List<Medicine> medicineList = new ArrayList<>();
+        Prescription prescription = new Prescription(role.getID(),medicineList);
+        System.out.println("How many Medicines do need?(1 - 10)");
+        int numOfMeds = Integer.parseInt(scanner.nextLine());
+        for (int i = 0; i < numOfMeds; i++) {
+            System.out.println("Enter the Commercial Name of the No."+(i+1)+" Medicine: ");
+            String commercialName = scanner.nextLine();
+            Medicine medicine = patientService.findMedicine(commercialName);
+            prescription.getMedicineList().add(medicine);
+        }
+        patientService.addPrescription(prescription);
     }
 
     private void addMedicine() throws SQLException {
