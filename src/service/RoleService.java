@@ -1,11 +1,12 @@
 package service;
 
 import data.model.Role;
+import data.model.enums.RoleType;
 
 import java.sql.SQLException;
 
 public interface RoleService {
-    boolean signIn(String username, String password);
-    boolean signOut(String Role);
+    Role signIn(String username, String password) throws SQLException;
+    boolean signOut(Role role);
     Role signUp(Role newRole) throws SQLException;
 }

@@ -2,10 +2,12 @@ package service;
 
 import data.model.Prescription;
 import data.model.Role;
+import data.model.enums.RoleType;
 import data.repository.MedicineDao;
 import data.repository.PrescriptionDao;
 import data.repository.RoleDao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AdminService implements RoleService {
@@ -24,13 +26,14 @@ public class AdminService implements RoleService {
     public boolean deleteMedicine(){return false;}
 
     @Override
-    public boolean signIn(String username, String password) {
-        return false;
+    public Role signIn(String username, String password) throws SQLException {
+        return roleDao.signIn(username , password, RoleType.ADMIN);
     }
 
     @Override
-    public boolean signOut(String Role) {
-        return false;
+    public boolean signOut( Role role) {
+        role = null;
+        return true;
     }
 
     @Override

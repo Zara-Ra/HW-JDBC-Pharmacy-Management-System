@@ -2,6 +2,7 @@ package service;
 
 import data.model.Prescription;
 import data.model.Role;
+import data.model.enums.RoleType;
 import data.repository.MedicineDao;
 import data.repository.PrescriptionDao;
 import data.repository.RoleDao;
@@ -36,13 +37,14 @@ public class PatientService implements RoleService {
     }
 
     @Override
-    public boolean signIn(String username, String password) {
-        return false;
+    public Role signIn(String username, String password) throws SQLException {
+        return roleDao.signIn(username , password,RoleType.PATIENT);
     }
 
     @Override
-    public boolean signOut(String Role) {
-        return false;
+    public boolean signOut(Role role) {
+        role = null;
+        return true;
     }
 
     @Override

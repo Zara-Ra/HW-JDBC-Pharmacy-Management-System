@@ -8,6 +8,11 @@ public class Admin extends Role {
         this.email = email;
     }
 
+    public Admin(int ID, String username, String password, String email) {
+        super(ID, username, password);
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -5,6 +5,13 @@ public class Patient extends Role {
     String address;
     String email;//Todo validate email@domain.com
 
+    public Patient(int ID, String username, String password, String phone, String address, String email) {
+        super(ID, username, password);
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+    }
+
     public Patient(String username, String password, String email, String phone, String address) {
         super(username, password);
         this.phone = phone;
@@ -34,5 +41,10 @@ public class Patient extends Role {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient :\t username: "+getUsername()+"\t phone: "+phone+"\t address: "+address+"\t email: "+email;
     }
 }

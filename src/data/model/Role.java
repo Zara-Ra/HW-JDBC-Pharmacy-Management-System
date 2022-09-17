@@ -1,9 +1,17 @@
 package data.model;
 
+import data.model.enums.RoleType;
+
 public abstract class Role {
     private int ID;
     private String username;
     private String password;
+
+    public Role(int ID, String username, String password) {
+        this.ID = ID;
+        this.username = username;
+        this.password = password;
+    }
 
     public Role(String username, String password) {
         this.username = username;

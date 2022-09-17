@@ -14,6 +14,21 @@ public class PharmacyManagementSystem {
     private PatientService patientService = PatientService.getInstance();
     private AdminService adminService = AdminService.getInstance();
     public void firstMenu() throws SQLException {
+        signIn();
+        //signUp();
+    }
+
+    private void signIn() throws SQLException {
+        System.out.println("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+
+        role = patientService.signIn(username,password);
+        System.out.println(role);
+    }
+
+    private void signUp() throws SQLException {
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");

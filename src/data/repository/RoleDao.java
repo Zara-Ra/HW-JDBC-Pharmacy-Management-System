@@ -3,6 +3,8 @@ package data.repository;
 import data.model.Admin;
 import data.model.Patient;
 import data.model.Role;
+import data.model.enums.RoleType;
+import service.AdminService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,5 +44,28 @@ public class RoleDao {
             result = resultSet.getInt(1);
         }
         return result;
+    }
+
+    public Role signIn(String username, String password, RoleType roleType) throws SQLException {
+        Role newSignIn = null;
+        String sql = "SELECT * FROM roles WHERE username = ? AND password = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,username);
+        preparedStatement.setString(2,password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            int id = resultSet.getInt(1);
+            String name = resultSet.getString(2);
+            String pass = resultSet.getString(3);
+            String email = resultSet.getString(4);
+            String phone = resultSet.getString(5);
+            String adrs = resultSet.getString(6);
+            if(roleType == RoleType.ADMIN) {
+                newSignIn = new Admin(id,name,password,email);
+            } else if (roleType == RoleType.PATIENT) {
+                newSignIn = new Patient(id,name,password,phone,adrs,email);
+            }
+        }
+        return newSignIn;
     }
 }
