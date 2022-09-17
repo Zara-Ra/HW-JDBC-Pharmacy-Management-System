@@ -4,10 +4,16 @@ import java.util.List;
 
 public class Prescription {
     private int ID;
-    private Patient patient;
+    private int patientID;
     private List<Medicine> medicineList;
     private double totalPrice;
     private boolean isConfirmed;
+
+    public Prescription(int ID, int patientID, List<Medicine> medicineList) {
+        this.ID = ID;
+        this.patientID = patientID;
+        this.medicineList = medicineList;
+    }
 
     public int getID() {
         return ID;
@@ -17,12 +23,12 @@ public class Prescription {
         this.ID = ID;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public int getPatientID() {
+        return patientID;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
     }
 
     public List<Medicine> getMedicineList() {

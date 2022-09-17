@@ -1,6 +1,9 @@
 package data.repository;
 
 import data.model.Medicine;
+import data.model.Prescription;
+import data.model.enums.MedType;
+import data.model.enums.UsageType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,5 +42,25 @@ public class MedicineDao {
             result = resultSet.getInt(1);
         }
         return result;
+    }
+
+    public Medicine findMedicineByID(int id) throws SQLException {
+        Medicine medicine = null;
+        String sql = "SELECT * FROM medicine WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            int medID = resultSet.getInt(1);
+            boolean isAvailable = resultSet.getBoolean(2);
+            String gname = resultSet.getString(3);
+            String cname = resultSet.getString(4);
+            int dose = resultSet.getInt(5);
+            String usageType = resultSet.getString(6);
+            String medType = resultSet.getString(7);
+            Double price = resultSet.getDouble(8);
+            medicine = new Medicine(medID,isAvailable,gname,cname,dose, UsageType.valueOf(usageType), MedType.valueOf(medType),price);
+        }
+        return medicine;
     }
 }

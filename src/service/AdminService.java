@@ -25,8 +25,8 @@ public class AdminService implements RoleService {
     private MedicineDao medicineDao = MedicineDao.getInstance();
     private RoleDao roleDao = RoleDao.getInstance();
 
-    public List<Prescription> displayAllPrescriptions() {
-        return null;
+    public List<Prescription> displayAllPrescriptions() throws SQLException {
+        return prescriptionDao.allPrescription();
     }
 
     public boolean confirmPrescription() {
@@ -44,10 +44,6 @@ public class AdminService implements RoleService {
             return medicine;
         }
         return null;
-    }
-
-    public boolean deleteMedicine() {
-        return false;
     }
 
     @Override

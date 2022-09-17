@@ -13,6 +13,17 @@ public class Medicine {
     private MedType medType;
     private double price;
 
+    public Medicine(int ID, boolean isAvailable, String genericName, String commercialName, int dose, UsageType usageType, MedType medType, double price) {
+        this.ID = ID;
+        this.isAvailable = isAvailable;
+        this.genericName = genericName;
+        this.commercialName = commercialName;
+        this.dose = dose;
+        this.usageType = usageType;
+        this.medType = medType;
+        this.price = price;
+    }
+
     public Medicine(boolean isAvailable, String genericName, String commercialName, int dose, UsageType usageType, MedType medType, double price) {
         this.isAvailable = isAvailable;
         this.genericName = genericName;
