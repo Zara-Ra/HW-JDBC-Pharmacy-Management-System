@@ -45,6 +45,6 @@ public class Patient extends Role {
 
     @Override
     public String toString() {
-        return "Patient :\t username: "+getUsername()+"\t phone: "+phone+"\t address: "+address+"\t email: "+email;
+        return "Patient :\t Username: "+getUsername()+"\t Phone Number: "+phone+"\t Address: "+address+"\t E-mail: "+email;
     }
 }
