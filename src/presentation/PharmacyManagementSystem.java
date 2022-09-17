@@ -22,12 +22,34 @@ public class PharmacyManagementSystem {
         //signIn(RoleType.ADMIN);
         signIn(RoleType.PATIENT);
         //addMedicine();
-        addPrescription();
+        //addPrescription();
+        displayConfirmedPrescription();
     }
 
+    private void displayConfirmedPrescription() throws SQLException {
+        List<Prescription> prescriptionList = patientService.displayConfirmedPrescriptions();
+        for (int i = 0; i < prescriptionList.size(); i++) {
+            System.out.println(i +" : "+prescriptionList.get(i));
+        }
+        System.out.println("Do you want to Edit or Delete any Prescription? Y/N");
+        String yesno = scanner.nextLine();
+        if(yesno.equals("Y") || yesno.equals("y")){
+            System.out.println("Enter Prescription number to Edit/Delete: ");
+            int PrescNum = Integer.parseInt(scanner.nextLine());
+            if(PrescNum < prescriptionList.size()){
+
+            }
+            else {
+                System.out.println("Invalid Number Entered");
+                firstMenu();
+            }
+        }
+        else
+            firstMenu();
+    }
     private void addPrescription() throws SQLException {
         List<Medicine> medicineList = new ArrayList<>();
-        Prescription prescription = new Prescription(role.getID(),medicineList);
+        Prescription prescription = new Prescription(role.getID(),medicineList,false);
         System.out.println("How many Medicines do need?(1 - 10)");
         int numOfMeds = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < numOfMeds; i++) {

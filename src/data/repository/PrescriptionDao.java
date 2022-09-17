@@ -23,10 +23,11 @@ public class PrescriptionDao {
     private MedicineDao medicineDao = MedicineDao.getInstance();
     private Connection connection = DBHelper.getConnection();
 
-    public List<Prescription> allPrescription() throws SQLException {
+    public List<Prescription> allPrescription(boolean confirmed) throws SQLException {
         List<Prescription> prescriptionList = null;
-        String sql = "SELECT id,patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10 FROM prescription";
+        String sql = "SELECT id,patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10 FROM prescription WHERE is_confirmed = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setBoolean(1,confirmed);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             int prescriptionID = resultSet.getInt(1);
@@ -46,7 +47,7 @@ public class PrescriptionDao {
     }
 
     public void addPrescription(Prescription prescription) throws SQLException {
-        String sql = "INSERT INTO prescription(patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO prescription(patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10,is_confirmed) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,prescription.getPatientID());
         int numOfMedicines = prescription.getMedicineList().size();
@@ -56,6 +57,7 @@ public class PrescriptionDao {
             else
                 preparedStatement.setInt(i+2,0);
         }
+        preparedStatement.setBoolean(12,prescription.isConfirmed());
         preparedStatement.executeUpdate();
     }
 }

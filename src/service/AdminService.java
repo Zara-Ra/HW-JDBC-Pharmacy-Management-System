@@ -26,7 +26,8 @@ public class AdminService implements RoleService {
     private RoleDao roleDao = RoleDao.getInstance();
 
     public List<Prescription> displayAllPrescriptions() throws SQLException {
-        return prescriptionDao.allPrescription();
+        boolean confirmedPresciptions = false;
+        return prescriptionDao.allPrescription(confirmedPresciptions);
     }
 
     public boolean confirmPrescription() {

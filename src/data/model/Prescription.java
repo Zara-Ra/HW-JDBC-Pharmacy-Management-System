@@ -15,9 +15,10 @@ public class Prescription {
         this.medicineList = medicineList;
     }
 
-    public Prescription(int patientID, List<Medicine> medicineList) {
+    public Prescription(int patientID, List<Medicine> medicineList,boolean isConfirmed) {
         this.patientID = patientID;
         this.medicineList = medicineList;
+        this.isConfirmed = isConfirmed;
     }
 
     public int getID() {

@@ -28,13 +28,15 @@ public class PatientService implements RoleService {
     }
 
     public void editPrescription() {
+
     }
 
     public void deletePrescription() {
     }
 
-    public List<Prescription> displayConfirmedPrescriptions() {
-        return null;
+    public List<Prescription> displayConfirmedPrescriptions() throws SQLException {
+        boolean confirmedPresciptions = true;
+        return prescriptionDao.allPrescription(confirmedPresciptions);
     }
 
     @Override
