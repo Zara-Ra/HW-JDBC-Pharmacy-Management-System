@@ -24,7 +24,8 @@ public class PharmacyManagementSystem {
         signIn(RoleType.PATIENT);
         //addMedicine();
         //addPrescription();
-        displayConfirmedPrescription();
+        //displayConfirmedPrescription();
+        displayAllUserPrescriptions();
     }
 
     private void displayAllUserPrescriptions() throws SQLException {
@@ -101,7 +102,7 @@ public class PharmacyManagementSystem {
 
     }
 
-    private void deletePrescription(Prescription prescription) {
+    private void deletePrescription(Prescription prescription) throws SQLException {
         patientService.deletePrescription(prescription);
     }
 

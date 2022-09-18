@@ -27,7 +27,7 @@ public class PatientService implements RoleService {
         prescriptionDao.addPrescription(prescription);
     }
 
-    public void deletePrescription(Prescription prescription) {
+    public void deletePrescription(Prescription prescription) throws SQLException {
         prescriptionDao.deletePrescription(prescription);
     }
 

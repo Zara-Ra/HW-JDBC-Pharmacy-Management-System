@@ -86,8 +86,11 @@ public class PrescriptionDao {
         preparedStatement.executeUpdate();
     }
 
-    public void deletePrescription(Prescription prescription) {
-        String sql = "DELETE FROM prescription WHERE ";//TODO
+    public void deletePrescription(Prescription prescription) throws SQLException {
+        String sql = "DELETE FROM prescription WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,prescription.getID());
+        preparedStatement.executeUpdate();
     }
 
     public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
