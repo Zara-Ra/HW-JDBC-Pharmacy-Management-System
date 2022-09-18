@@ -3,10 +3,7 @@ package data.repository;
 import data.model.Medicine;
 import data.model.Prescription;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class PrescriptionDao {
     private Connection connection = DBHelper.getConnection();
 
     public List<Prescription> allPrescription(boolean confirmed) throws SQLException {
-        List<Prescription> prescriptionList = null;
+        List<Prescription> prescriptionList = new ArrayList<>();
         String sql = "SELECT id,patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10 FROM prescription WHERE is_confirmed = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setBoolean(1,confirmed);
@@ -32,12 +29,13 @@ public class PrescriptionDao {
         while (resultSet.next()) {
             int prescriptionID = resultSet.getInt(1);
             int patientID = resultSet.getInt(2);
-            double totalPrice = resultSet.getDouble(3);
             List<Medicine> medicineList = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                int medicineID = resultSet.getInt(i + 4);
-                Medicine medicine = medicineDao.findMedicineByID(medicineID);
-                medicineList.add(medicine);
+                int medicineID = resultSet.getInt(i + 3);
+                if(medicineID != 0) {
+                    Medicine medicine = medicineDao.findMedicineByID(medicineID);
+                    medicineList.add(medicine);
+                }
             }
             Prescription prescription = new Prescription(prescriptionID, patientID, medicineList);
             prescriptionList.add(prescription);
@@ -152,5 +150,20 @@ public class PrescriptionDao {
         }
 
         return prescriptionList;
+    }
+
+    public boolean confirmPrescription(Prescription prescription) throws SQLException {
+        String sql = "UPDATE prescription SET is_confirmed = true WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,prescription.getID());
+        return preparedStatement.executeUpdate() > 0 ;
+    }
+
+    public void setTotalPrescriptionPrice(Prescription prescription) throws SQLException{
+        String sql = "UPDATE prescription SET total_price = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setDouble(1,prescription.getTotalPrice());
+        preparedStatement.setInt(2,prescription.getID());
+        preparedStatement.executeUpdate();
     }
 }

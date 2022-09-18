@@ -34,6 +34,17 @@ public class PatientService implements RoleService {
     public List<Prescription> displayConfirmedPrescriptions(int patientID) throws SQLException {
         return prescriptionDao.allConfirmedPrescriptions(patientID);
     }
+    public List<Prescription> displayAllUserPrescriptions(int patientID) throws SQLException {
+        return prescriptionDao.allUserPrescriptions(patientID);
+    }
+
+    public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
+        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
+    }
+
+    public void addMedicineToPrescription(Prescription prescription, Medicine medicine)throws SQLException  {
+        prescriptionDao.addMedicineToPrescription(prescription,medicine);
+    }
 
     @Override
     public Role signIn(String username, String password) throws SQLException {
@@ -54,16 +65,5 @@ public class PatientService implements RoleService {
             return newRole;
         }
         return null;
-    }
-    public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
-        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
-    }
-
-    public void addMedicineToPrescription(Prescription prescription, Medicine medicine)throws SQLException  {
-        prescriptionDao.addMedicineToPrescription(prescription,medicine);
-    }
-
-    public List<Prescription> displayAllUserPrescriptions(int patientID) throws SQLException {
-        return prescriptionDao.allUserPrescriptions(patientID);
     }
 }

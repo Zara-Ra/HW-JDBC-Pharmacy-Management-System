@@ -19,15 +19,49 @@ public class PharmacyManagementSystem {
     private AdminService adminService = AdminService.getInstance();
 
     public void firstMenu() throws SQLException {
+        signIn(RoleType.ADMIN);
         //signUp(RoleType.ADMIN);
-        //signIn(RoleType.ADMIN);
-        signIn(RoleType.PATIENT);
         //addMedicine();
+        displayUnconfirmedPrescription();
+
+        //signIn(RoleType.PATIENT);
+        //signUp(RoleType.PATIENT);
         //addPrescription();
         //displayConfirmedPrescription();
-        displayAllUserPrescriptions();
+        //displayAllUserPrescriptions();
+
+
     }
 
+    private void displayUnconfirmedPrescription() throws SQLException {
+        List <Prescription> prescriptionList = adminService.displayUnconfirmedPrescriptions();
+        for (int i = 0; i < prescriptionList.size(); i++) {
+            Prescription prescription = prescriptionList.get(i);
+            System.out.println(i + " "+ prescription);
+            System.out.println("Confirm Prescription No."+i+" ?(Y?N)");
+            String yesno = scanner.nextLine();
+            if(yesno.equals("Y") || yesno.equals("y")) {
+                adminService.confirmPrescription(prescription);
+                List<Medicine> medicineList = prescription.getMedicineList();
+                double totoalPrice = 0;
+                for (int j = 0; j < medicineList.size(); j++) {
+                    System.out.println(j+" "+medicineList.get(j));
+                    System.out.println("Is Medicine No." +j+" Available?");
+                    String yesNo = scanner.nextLine();
+                    if(yesNo.equals("Y")||yesNo.equals("y")){
+                        System.out.println("Enter the Medicine Price: ");
+                        double price = Double.parseDouble(scanner.nextLine());
+                        medicineList.get(j).isAvailable();
+                        medicineList.get(j).setPrice(price);
+                        adminService.setMedicineAvailable(medicineList.get(j));
+                        totoalPrice +=price;
+                    }
+                }
+                prescription.setTotalPrice(totoalPrice);
+                adminService.setTotalPrescriptonPrice(prescription);
+            }
+        }
+    }
     private void displayAllUserPrescriptions() throws SQLException {
         List<Prescription> prescriptionList = patientService.displayAllUserPrescriptions(role.getID());
         for (int i = 0; i < prescriptionList.size(); i++) {

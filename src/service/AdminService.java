@@ -25,13 +25,13 @@ public class AdminService implements RoleService {
     private MedicineDao medicineDao = MedicineDao.getInstance();
     private RoleDao roleDao = RoleDao.getInstance();
 
-    public List<Prescription> displayAllPrescriptions() throws SQLException {
+    public List<Prescription> displayUnconfirmedPrescriptions() throws SQLException {
         boolean confirmedPresciptions = false;
         return prescriptionDao.allPrescription(confirmedPresciptions);
     }
 
-    public boolean confirmPrescription() {
-        return false;
+    public boolean confirmPrescription(Prescription prescription) throws SQLException {
+        return prescriptionDao.confirmPrescription(prescription);
     }
 
     public boolean confirmMedicineAvailability() {
@@ -66,5 +66,13 @@ public class AdminService implements RoleService {
             return newRole;
         }
         return null;
+    }
+
+    public void setMedicineAvailable(Medicine medicine) throws SQLException {
+        medicineDao.setMedicineAvailable(medicine);
+    }
+
+    public void setTotalPrescriptonPrice(Prescription prescription) throws SQLException {
+        prescriptionDao.setTotalPrescriptionPrice(prescription);
     }
 }

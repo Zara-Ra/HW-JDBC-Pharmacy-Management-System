@@ -88,4 +88,12 @@ public class MedicineDao {
         }
         return medicine;
     }
+
+    public void setMedicineAvailable(Medicine medicine) throws SQLException {
+        String sql = "UPDATE medicine SET is_available = true,price = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setDouble(1,medicine.getPrice());
+        preparedStatement.setInt(2,medicine.getID());
+        preparedStatement.executeUpdate();
+    }
 }
