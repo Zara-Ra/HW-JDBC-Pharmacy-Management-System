@@ -90,10 +90,9 @@ public class MedicineDao {
     }
 
     public void setMedicineAvailable(Medicine medicine) throws SQLException {
-        String sql = "UPDATE medicine SET is_available = true,price = ? WHERE id = ?";
+        String sql = "UPDATE medicine SET is_available = true WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setDouble(1,medicine.getPrice());
-        preparedStatement.setInt(2,medicine.getID());
+        preparedStatement.setInt(1,medicine.getID());
         preparedStatement.executeUpdate();
     }
 }

@@ -1,19 +1,30 @@
 package presentation;
 
-import data.model.Admin;
-import data.model.Patient;
-import data.model.enums.RoleType;
-
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class PMS {
     public static void main(String[] args) throws SQLException {
-        System.out.println("~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~");
-        System.out.println();
-        System.out.println("*~*~*    Welcome to Pharmacy Management System     *~*~*");
-        System.out.println("                                                    ZaRa");
-        System.out.println("~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~~*~*~*~");
-        PatientPMS pms = new PatientPMS();
-        pms.firstMenu();
+        welcome();
     }
+    public static void welcome() throws SQLException {
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~    Welcome to Pharmacy Management System     ~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ZaRa~");
+        System.out.println("Press 1 --> Admin");
+        System.out.println("Press 2 --> Patient");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Scanner scanner = new Scanner(System.in);
+        int role = Integer.parseInt(scanner.nextLine());
+        switch (role){
+            case 1:
+                AdminPMS adminPMS = new AdminPMS();
+                adminPMS.firstMenu();
+                break;
+            case 2:
+                PatientPMS patientPMS = new PatientPMS();
+                patientPMS.firstMenu();
+                break;
+        }
     }
+}

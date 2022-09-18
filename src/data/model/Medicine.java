@@ -38,12 +38,16 @@ public class Medicine {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public void setAvailability(boolean available) {
@@ -100,12 +104,11 @@ public class Medicine {
 
     @Override
     public String toString() {
-        return "\nAvailablity: " + isAvailable +
-                "\tGeneric Name: " + genericName +
+        return "\tGeneric Name: " + genericName +
                 "\tCommercial Name: " + commercialName +
                 "\tDose: " + dose +
                 "\tUsage Type: " + usageType +
                 "\tMedicine Type: " + medType +
-                "\tprice: " + price ;
+                "\tPrice: " + price ;
     }
 }

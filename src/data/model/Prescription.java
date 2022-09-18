@@ -21,6 +21,13 @@ public class Prescription {
         this.isConfirmed = isConfirmed;
     }
 
+    public Prescription(int prescriptionID, int patientID, List<Medicine> medicineList, double totalPrice) {
+        this.ID = prescriptionID;
+        this.patientID = patientID;
+        this.medicineList = medicineList;
+        this.totalPrice = totalPrice;
+    }
+
     public int getID() {
         return ID;
     }
@@ -63,8 +70,12 @@ public class Prescription {
 
     @Override
     public String toString() {
-        return "Prescription Info:" + "\n Medicines:" + medicineList +
-                "\n totalPrice = " + totalPrice +
-                " Confirmed :" + isConfirmed;
+        String meds = "";
+        for (int i = 0; i < medicineList.size(); i++) {
+            meds += medicineList.get(i).toString()+"\n";
+        }
+        return "Prescription Info:" +
+                " Total Price = " + totalPrice+
+                "\n Medicenes \n" + meds;
     }
 }

@@ -75,4 +75,7 @@ public class AdminService implements RoleService {
     public void setTotalPrescriptonPrice(Prescription prescription) throws SQLException {
         prescriptionDao.setTotalPrescriptionPrice(prescription);
     }
+    public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
+        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
+    }
 }

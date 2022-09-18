@@ -62,7 +62,7 @@ public class PrescriptionDao {
                     medicineList.add(medicine);
                 }
             }
-            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList);
+            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList,totalPrice);
             prescriptionList.add(prescription);
         }
 
@@ -145,7 +145,7 @@ public class PrescriptionDao {
                     medicineList.add(medicine);
                 }
             }
-            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList);
+            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList,totalPrice);
             prescriptionList.add(prescription);
         }
 
