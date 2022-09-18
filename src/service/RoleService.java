@@ -1,8 +1,7 @@
 package service;
 
-import data.model.Medicine;
-import data.model.Role;
-import data.model.enums.RoleType;
+import data.entity.Medicine;
+import data.entity.Role;
 import data.repository.MedicineDao;
 
 import java.sql.SQLException;

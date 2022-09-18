@@ -1,9 +1,8 @@
 package data.repository;
 
-import data.model.Medicine;
-import data.model.Prescription;
-import data.model.enums.MedType;
-import data.model.enums.UsageType;
+import data.entity.Medicine;
+import data.enums.MedType;
+import data.enums.UsageType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

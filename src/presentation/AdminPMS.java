@@ -1,11 +1,11 @@
 package presentation;
 
-import data.model.Admin;
-import data.model.Medicine;
-import data.model.Prescription;
-import data.model.Role;
-import data.model.enums.MedType;
-import data.model.enums.UsageType;
+import data.entity.Admin;
+import data.entity.Medicine;
+import data.entity.Prescription;
+import data.entity.Role;
+import data.enums.MedType;
+import data.enums.UsageType;
 import service.AdminService;
 
 import java.sql.SQLException;

@@ -1,29 +1,29 @@
-package data.model;
+package data.entity;
 
 import java.util.List;
 
 public class Prescription {
     private int ID;
-    private int patientID;
+    private Patient patient;
     private List<Medicine> medicineList;
     private double totalPrice;
     private boolean isConfirmed;
 
-    public Prescription(int ID, int patientID, List<Medicine> medicineList) {
+    public Prescription(int ID, Patient patient, List<Medicine> medicineList) {
         this.ID = ID;
-        this.patientID = patientID;
+        this.patient = patient;
         this.medicineList = medicineList;
     }
 
-    public Prescription(int patientID, List<Medicine> medicineList,boolean isConfirmed) {
-        this.patientID = patientID;
+    public Prescription(Patient patient, List<Medicine> medicineList,boolean isConfirmed) {
+        this.patient = patient;
         this.medicineList = medicineList;
         this.isConfirmed = isConfirmed;
     }
 
-    public Prescription(int prescriptionID, int patientID, List<Medicine> medicineList, double totalPrice) {
+    public Prescription(int prescriptionID, Patient patient, List<Medicine> medicineList, double totalPrice) {
         this.ID = prescriptionID;
-        this.patientID = patientID;
+        this.patient = patient;
         this.medicineList = medicineList;
         this.totalPrice = totalPrice;
     }
@@ -36,12 +36,12 @@ public class Prescription {
         this.ID = ID;
     }
 
-    public int getPatientID() {
-        return patientID;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientID(int patientID) {
-        this.patientID = patientID;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public List<Medicine> getMedicineList() {

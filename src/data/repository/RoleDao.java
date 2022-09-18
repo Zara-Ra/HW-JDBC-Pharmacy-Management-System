@@ -1,10 +1,9 @@
 package data.repository;
 
-import data.model.Admin;
-import data.model.Patient;
-import data.model.Role;
-import data.model.enums.RoleType;
-import service.AdminService;
+import data.entity.Admin;
+import data.entity.Patient;
+import data.entity.Role;
+import data.enums.RoleType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,5 +69,23 @@ public class RoleDao {
             }
         }
         return newSignIn;
+    }
+
+    public Patient findPatientByID(int patientID) throws SQLException {
+        Patient result = null;
+        String sql = "SELECT * FROM roles WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,patientID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            int id = resultSet.getInt(1);
+            String username = resultSet.getString(2);
+            String password = resultSet.getString(3);
+            String email = resultSet.getString(4);
+            String phone = resultSet.getString(5);
+            String adrs = resultSet.getString(6);
+            result = new Patient(id,username,password,phone,adrs,email);
+        }
+        return result;
     }
 }

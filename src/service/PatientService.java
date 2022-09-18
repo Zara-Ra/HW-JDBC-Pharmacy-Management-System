@@ -1,9 +1,9 @@
 package service;
 
-import data.model.Medicine;
-import data.model.Prescription;
-import data.model.Role;
-import data.model.enums.RoleType;
+import data.entity.Medicine;
+import data.entity.Prescription;
+import data.entity.Role;
+import data.enums.RoleType;
 import data.repository.PrescriptionDao;
 import data.repository.RoleDao;
 

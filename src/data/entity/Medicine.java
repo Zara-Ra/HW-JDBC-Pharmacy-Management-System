@@ -1,7 +1,7 @@
-package data.model;
+package data.entity;
 
-import data.model.enums.MedType;
-import data.model.enums.UsageType;
+import data.enums.MedType;
+import data.enums.UsageType;
 
 public class Medicine {
     private int ID;

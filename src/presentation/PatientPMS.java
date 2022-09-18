@@ -1,9 +1,9 @@
 package presentation;
 
-import data.model.Medicine;
-import data.model.Patient;
-import data.model.Prescription;
-import data.model.Role;
+import data.entity.Medicine;
+import data.entity.Patient;
+import data.entity.Prescription;
+import data.entity.Role;
 import service.PatientService;
 
 import java.sql.SQLException;

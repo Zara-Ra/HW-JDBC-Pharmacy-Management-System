@@ -1,4 +1,4 @@
-package data.model;
+package data.entity;
 
 public class Patient extends Role {
     String phone;//Todo validate
@@ -17,6 +17,10 @@ public class Patient extends Role {
         this.phone = phone;
         this.address = address;
         this.email = email;
+    }
+
+    public Patient(int patientID) {
+        super(patientID);
     }
 
     public String getPhone() {

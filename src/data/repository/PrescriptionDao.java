@@ -1,7 +1,8 @@
 package data.repository;
 
-import data.model.Medicine;
-import data.model.Prescription;
+import data.entity.Medicine;
+import data.entity.Patient;
+import data.entity.Prescription;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class PrescriptionDao {
     }
 
     private MedicineDao medicineDao = MedicineDao.getInstance();
+    private RoleDao roleDao = RoleDao.getInstance();
     private Connection connection = DBHelper.getConnection();
 
     public List<Prescription> allPrescription(boolean confirmed) throws SQLException {
@@ -29,6 +31,7 @@ public class PrescriptionDao {
         while (resultSet.next()) {
             int prescriptionID = resultSet.getInt(1);
             int patientID = resultSet.getInt(2);
+            Patient patient = new Patient(patientID);
             List<Medicine> medicineList = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
                 int medicineID = resultSet.getInt(i + 3);
@@ -37,7 +40,7 @@ public class PrescriptionDao {
                     medicineList.add(medicine);
                 }
             }
-            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList);
+            Prescription prescription = new Prescription(prescriptionID, patient, medicineList);
             prescriptionList.add(prescription);
         }
 
@@ -53,6 +56,7 @@ public class PrescriptionDao {
         while (resultSet.next()) {
             int prescriptionID = resultSet.getInt(1);
             int pID = resultSet.getInt(2);
+            Patient patient = new Patient(pID);
             double totalPrice = resultSet.getDouble(3);
             List<Medicine> medicineList = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
@@ -62,7 +66,7 @@ public class PrescriptionDao {
                     medicineList.add(medicine);
                 }
             }
-            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList,totalPrice);
+            Prescription prescription = new Prescription(prescriptionID, patient, medicineList,totalPrice);
             prescriptionList.add(prescription);
         }
 
@@ -72,7 +76,7 @@ public class PrescriptionDao {
     public void addPrescription(Prescription prescription) throws SQLException {
         String sql = "INSERT INTO prescription(patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10,is_confirmed) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,prescription.getPatientID());
+        preparedStatement.setInt(1,prescription.getPatient().getID());
         int numOfMedicines = prescription.getMedicineList().size();
         for (int i = 0; i < 10 ; i++) {
             if(i < numOfMedicines)
@@ -136,6 +140,7 @@ public class PrescriptionDao {
         while (resultSet.next()) {
             int prescriptionID = resultSet.getInt(1);
             int pID = resultSet.getInt(2);
+            Patient patient = new Patient(pID);
             double totalPrice = resultSet.getDouble(3);
             List<Medicine> medicineList = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
@@ -145,7 +150,7 @@ public class PrescriptionDao {
                     medicineList.add(medicine);
                 }
             }
-            Prescription prescription = new Prescription(prescriptionID, patientID, medicineList,totalPrice);
+            Prescription prescription = new Prescription(prescriptionID, patient, medicineList,totalPrice);
             prescriptionList.add(prescription);
         }
 

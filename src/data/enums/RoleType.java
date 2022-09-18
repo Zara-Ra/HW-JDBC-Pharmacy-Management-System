@@ -1,4 +1,4 @@
-package data.model.enums;
+package data.enums;
 
 public enum RoleType {
     ADMIN,

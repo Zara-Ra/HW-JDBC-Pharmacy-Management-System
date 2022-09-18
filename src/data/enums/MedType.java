@@ -1,4 +1,4 @@
-package data.model.enums;
+package data.enums;
 
 public enum MedType {
     DIABETIS(1,"Diabetis"),

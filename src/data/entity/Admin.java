@@ -1,4 +1,4 @@
-package data.model;
+package data.entity;
 
 public class Admin extends Role {
     String email;//TODO Validate .*@pharmacy.com
