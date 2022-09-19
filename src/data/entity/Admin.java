@@ -1,11 +1,23 @@
 package data.entity;
 
+import data.enums.RoleType;
+
 public class Admin extends Role {
     String email;//TODO Validate .*@pharmacy.com
+    RoleType roleType;
 
-    public Admin(String username, String password, String email) {
+    public Admin(String username, String password, String email,RoleType roleType) {
         super(username, password);
         this.email = email;
+        this.roleType = roleType;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 
     public Admin(int ID, String username, String password, String email) {

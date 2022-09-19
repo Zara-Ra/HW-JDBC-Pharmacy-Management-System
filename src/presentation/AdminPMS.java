@@ -5,6 +5,7 @@ import data.entity.Medicine;
 import data.entity.Prescription;
 import data.entity.Role;
 import data.enums.MedType;
+import data.enums.RoleType;
 import data.enums.UsageType;
 import service.AdminService;
 
@@ -182,7 +183,7 @@ public class AdminPMS implements UserPMS {
         String password = scanner.nextLine();
         System.out.println("Enter email: ");
         String email = scanner.nextLine();
-        role = new Admin(username, password, email);
+        role = new Admin(username, password, email, RoleType.ADMIN);
         role = adminService.signUp(role);
     }
 

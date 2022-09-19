@@ -19,7 +19,7 @@ public class RoleDao {
     private Connection connection = DBHelper.getConnection();
 
     public boolean signUp(Role newRole) throws SQLException {
-        String sql = "INSERT INTO roles(username,password,email,phone,address) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO roles(username,password,email,phone,address,role_type) VALUES(?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1,newRole.getUsername());
         preparedStatement.setString(2,newRole.getPassword());
@@ -27,11 +27,13 @@ public class RoleDao {
             preparedStatement.setString(3, ((Admin) newRole).getEmail());
             preparedStatement.setString(4,null);
             preparedStatement.setString(5,null);
+            preparedStatement.setString(6,((Admin) newRole).getRoleType().toString());
 
         } else if (newRole instanceof Patient) {
             preparedStatement.setString(3, ((Patient)newRole).getEmail());
             preparedStatement.setString(4,((Patient)newRole).getPhone());
             preparedStatement.setString(5,((Patient)newRole).getAddress());
+            preparedStatement.setString(6,null);
         }
         return preparedStatement.executeUpdate() > 0;
     }
@@ -50,7 +52,13 @@ public class RoleDao {
 
     public Role signIn(String username, String password, RoleType roleType) throws SQLException {
         Role newSignIn = null;
-        String sql = "SELECT * FROM roles WHERE username = ? AND password = ?";
+        String sql = "";
+        if(roleType == RoleType.ADMIN){
+            sql = "SELECT * FROM roles WHERE username =? AND password = ? AND role_type = 'ADMIN'";
+        }
+        else {
+            sql = "SELECT * FROM roles WHERE username = ? AND password = ?";
+        }
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1,username);
         preparedStatement.setString(2,password);
