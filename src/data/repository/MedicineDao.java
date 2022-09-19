@@ -88,10 +88,27 @@ public class MedicineDao {
         return medicine;
     }
 
-    public void setMedicineAvailable(Medicine medicine) throws SQLException {
+    /*public void setMedicineAvailable(Medicine medicine) throws SQLException {
         String sql = "UPDATE medicine SET is_available = true WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,medicine.getID());
         preparedStatement.executeUpdate();
+    }*/
+
+    public boolean deleteMedicine(Medicine deleteMed) throws SQLException {
+        String sql = "DELETE FROM medicine WHERE generic_name = ? AND commercial_name = ? AND dose = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,deleteMed.getGenericName());
+        preparedStatement.setString(2,deleteMed.getCommercialName());
+        preparedStatement.setInt(3,deleteMed.getDose());
+        return preparedStatement.executeUpdate() > 0;
+    }
+
+    public boolean editMedicineAvailability(Medicine medicine) throws SQLException {
+        String sql = "UPDATE medicine SET is_available = ? WHERE commercial_name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setBoolean(1,medicine.isAvailable());
+        preparedStatement.setString(2,medicine.getCommercialName());
+        return preparedStatement.executeUpdate() > 0;
     }
 }

@@ -31,7 +31,7 @@ public class AdminPMS implements UserPMS {
                 secondMenu();
                 break;
             case 2:
-                if(signIn())
+                if (signIn())
                     secondMenu();
                 else
                     firstMenu();
@@ -46,57 +46,59 @@ public class AdminPMS implements UserPMS {
         }
     }
 
-    public void secondMenu() throws SQLException {
+    public void secondMenu() throws SQLException {//TODO add role Type in roles table & check if the user is admin/maybe a boolean would work
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Press 1 --> Add New Medicine");
-        System.out.println("Press 2 --> Confirm Patient Prescriptions ");
-        System.out.println("Press 3 --> Previous Menu ");
+        System.out.println("Press 2 --> Delete a Medicine");
+        System.out.println("Press 3 --> Edit Medicine Availability");
+        System.out.println("Press 4 --> Confirm Patient Prescriptions ");
+        System.out.println("Press 5 --> Previous Menu ");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         int secondChoice = Integer.parseInt(scanner.nextLine());
-        switch (secondChoice){
+        switch (secondChoice) {
             case 1:
                 addMedicine();
                 secondMenu();
                 break;
             case 2:
-                displayUnconfirmedPrescription();
+                deleteMedicine();
                 secondMenu();
                 break;
             case 3:
+                editMedicineAvailability();
+                secondMenu();
+                break;
+            case 4:
+                displayUnconfirmedPrescription();
+                secondMenu();
+                break;
+            case 5:
                 firstMenu();
                 break;
         }
     }
+
     private void displayUnconfirmedPrescription() throws SQLException {
         List<Prescription> prescriptionList = adminService.displayUnconfirmedPrescriptions();
         for (int i = 0; i < prescriptionList.size(); i++) {
             Prescription prescription = prescriptionList.get(i);
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println((i+1) + " " + prescription);
-            System.out.println("Confirm Prescription No." + (i+1) + " ?(Y/N)");
+            System.out.println((i + 1) + " " + prescription);
+            System.out.println("Confirm Prescription No." + (i + 1) + " ?(Y/N)");
             String yesno = scanner.nextLine();
             if (yesno.equals("Y") || yesno.equals("y")) {
-                adminService.confirmPrescription(prescription);
                 List<Medicine> medicineList = prescription.getMedicineList();
                 double totoalPrice = 0;
                 for (int j = 0; j < medicineList.size(); j++) {
                     System.out.println("----------------------------------------------------------------------------------------");
-                    System.out.println((j+1) + " " + medicineList.get(j));
-                    System.out.println("Is Medicine No." + (j+1) + " Available?(Y/N)");
-                    String yesNo = scanner.nextLine();
-                    if (yesNo.equals("Y") || yesNo.equals("y")) {
-                        medicineList.get(j).setAvailability(true);
-                        double price = medicineList.get(j).getPrice();
-                        adminService.setMedicineAvailable(medicineList.get(j));
-                        totoalPrice += price;
-                    }
-                    else{
-                        medicineList.get(j).setAvailability(false);
-                        adminService.deleteMedicineFromPrescription(j+1,prescription);
+                    System.out.println((j + 1) + " " + medicineList.get(j));
+                    if(medicineList.get(j).isAvailable()){
+                        totoalPrice += medicineList.get(j).getPrice();
                     }
                 }
+                System.out.println("Total Price of Prescription is: "+totoalPrice);
                 prescription.setTotalPrice(totoalPrice);
-                adminService.setTotalPrescriptonPrice(prescription);
+                adminService.confirmPrescription(prescription);
             }
         }
     }
@@ -121,11 +123,44 @@ public class AdminPMS implements UserPMS {
         }
         int medType = Integer.parseInt(scanner.nextLine());
         medType--;
+        System.out.println("Is this Medicine Available?(Y/N)");
         boolean isAvalable = false;
+        String yesNo = scanner.nextLine();
+        if (yesNo.equals("Y") || yesNo.equals("y")) {
+            isAvalable = true;
+        }
         System.out.println("Enter Medicine Price: ");
         double price = Double.parseDouble(scanner.nextLine());
         Medicine medicine = new Medicine(isAvalable, gname, cname, dose, UsageType.values()[usageType], MedType.values()[medType], price);
         medicine = adminService.addMedicine(medicine);
+    }
+
+    private void deleteMedicine() throws SQLException {
+        System.out.println("Enter Generic Name: ");
+        String gname = scanner.nextLine();
+        System.out.println("Enter Commercial Name: ");
+        String cname = scanner.nextLine();
+        System.out.println("Enter Dose: ");
+        int dose = Integer.parseInt(scanner.nextLine());
+        Medicine deleteMed = new Medicine(gname, cname, dose);
+        if (adminService.deleteMedicine(deleteMed))
+            System.out.println("Medicine Deleted Successfully");
+        else
+            System.out.println("Unable to Delete Medicine");
+    }
+    private void editMedicineAvailability() throws SQLException{
+        System.out.println("Enter Commercial Name: ");
+        String cname = scanner.nextLine();
+        System.out.println("Is This Medicine Currently Available? (Y/N)");
+        String yesNo = scanner.nextLine();
+        boolean isAvailable = false;
+        if(yesNo.equals("Y") || yesNo.equals("y"))
+            isAvailable = false;
+        Medicine editMed = new Medicine(isAvailable,cname);
+        if(adminService.editMedicineAvailablity(editMed))
+            System.out.println("Medicine Edited Successfully");
+        else
+            System.out.println("Unable to Edit Medicine");
     }
 
     public boolean signIn() throws SQLException {
@@ -149,7 +184,8 @@ public class AdminPMS implements UserPMS {
         role = new Admin(username, password, email);
         role = adminService.signUp(role);
     }
-    public void signOut(){
+
+    public void signOut() {
         adminService.signOut(role);
     }
 }

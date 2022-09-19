@@ -34,6 +34,17 @@ public class Medicine {
         this.price = price;
     }
 
+    public Medicine(boolean isAvailable, String commercialName) {
+        this.isAvailable = isAvailable;
+        this.commercialName = commercialName;
+    }
+
+    public Medicine(String genericName, String commercialName, int dose) {
+        this.genericName = genericName;
+        this.commercialName = commercialName;
+        this.dose = dose;
+    }
+
     public int getID() {
         return ID;
     }
@@ -104,11 +115,18 @@ public class Medicine {
 
     @Override
     public String toString() {
+        String availability = "";
+        if(isAvailable){
+            availability += "Available";
+        }
+        else
+            availability += "Not Available";
         return "\tGeneric Name: " + genericName +
                 "\tCommercial Name: " + commercialName +
                 "\tDose: " + dose +
                 "\tUsage Type: " + usageType +
                 "\tMedicine Type: " + medType +
-                "\tPrice: " + price ;
+                "\tPrice: " + price +
+                "\t" + availability;
     }
 }

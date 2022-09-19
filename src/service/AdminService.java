@@ -34,10 +34,6 @@ public class AdminService implements RoleService {
         return prescriptionDao.confirmPrescription(prescription);
     }
 
-    public boolean confirmMedicineAvailability() {
-        return false;
-    }
-
     public Medicine addMedicine(Medicine medicine) throws SQLException {
         if (medicineDao.addMedicine(medicine)) {
             int medicineID = medicineDao.findMedID(medicine.getCommercialName());
@@ -68,14 +64,15 @@ public class AdminService implements RoleService {
         return null;
     }
 
-    public void setMedicineAvailable(Medicine medicine) throws SQLException {
-        medicineDao.setMedicineAvailable(medicine);
-    }
-
-    public void setTotalPrescriptonPrice(Prescription prescription) throws SQLException {
-        prescriptionDao.setTotalPrescriptionPrice(prescription);
-    }
     public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
         prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
+    }
+
+    public boolean deleteMedicine(Medicine deleteMed) throws SQLException {
+        return medicineDao.deleteMedicine(deleteMed);
+    }
+
+    public boolean editMedicineAvailablity(Medicine medicine) throws SQLException {
+        return medicineDao.editMedicineAvailability(medicine);
     }
 }

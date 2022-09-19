@@ -158,17 +158,10 @@ public class PrescriptionDao {
     }
 
     public boolean confirmPrescription(Prescription prescription) throws SQLException {
-        String sql = "UPDATE prescription SET is_confirmed = true WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,prescription.getID());
-        return preparedStatement.executeUpdate() > 0 ;
-    }
-
-    public void setTotalPrescriptionPrice(Prescription prescription) throws SQLException{
-        String sql = "UPDATE prescription SET total_price = ? WHERE id = ?";
+        String sql = "UPDATE prescription SET is_confirmed = true, total_price = ? WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setDouble(1,prescription.getTotalPrice());
         preparedStatement.setInt(2,prescription.getID());
-        preparedStatement.executeUpdate();
+        return preparedStatement.executeUpdate() > 0 ;
     }
 }

@@ -157,7 +157,7 @@ public class PatientPMS implements UserPMS {
 
     private void addPrescription() throws SQLException {
         List<Medicine> medicineList = new ArrayList<>();
-        Prescription prescription = new Prescription(role.getID(), medicineList, false);
+        Prescription prescription = new Prescription((Patient) role, medicineList, false);
         System.out.println("How many Medicines do you need?(1 - 10)");
         int numOfMeds = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < numOfMeds; i++) {
