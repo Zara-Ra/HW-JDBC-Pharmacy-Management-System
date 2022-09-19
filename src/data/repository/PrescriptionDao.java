@@ -97,7 +97,7 @@ public class PrescriptionDao {
 
     public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
         String deleteMed = "med_id_"+String.valueOf(deleteMedicineNum);
-        String sql = "UPDATE prescription SET "+ deleteMed + " = 0 WHERE id = ?";
+        String sql = "UPDATE prescription SET "+ deleteMed + " = 0 , is_confirmed = false WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,prescription.getID());
         preparedStatement.executeUpdate();
@@ -106,7 +106,7 @@ public class PrescriptionDao {
     public void addMedicineToPrescription(Prescription prescription, Medicine medicine) throws SQLException {
         int emptyPosition = findEmptyMedicine(prescription);
         String emptyColumn = "med_id_"+String.valueOf(emptyPosition);
-        String sql ="UPDATE prescription SET "+emptyColumn+" = ? WHERE id = ?";
+        String sql ="UPDATE prescription SET "+emptyColumn+" = ? , is_confirmed = false WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,medicine.getID());
         preparedStatement.setInt(2,prescription.getID());

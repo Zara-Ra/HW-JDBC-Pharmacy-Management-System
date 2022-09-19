@@ -16,12 +16,12 @@ public class PatientPMS implements UserPMS {
     private Role role;
     private PatientService patientService = PatientService.getInstance();
     public void firstMenu() throws SQLException {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         System.out.println("Press 1 --> Sign up ");
         System.out.println("Press 2 --> Sign in ");
         System.out.println("Press 3 --> Sign out ");
         System.out.println("Press 4 --> Exit ");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
 
         int firstChoice = Integer.parseInt(scanner.nextLine());
         switch (firstChoice) {
@@ -46,12 +46,12 @@ public class PatientPMS implements UserPMS {
     }
 
     public void secondMenu() throws SQLException{
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         System.out.println("Press 1 --> Add a New Prescription");
         System.out.println("Press 2 --> Edit/Delete Prescription");
         System.out.println("Press 3 --> Confirmed Prescriptions");
         System.out.println("Press 4 --> Previous Menu");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
 
         int secondChoice = Integer.parseInt(scanner.nextLine());
         switch (secondChoice){
@@ -76,7 +76,7 @@ public class PatientPMS implements UserPMS {
     private void displayAllUserPrescriptions() throws SQLException {
         List<Prescription> prescriptionList = patientService.displayAllUserPrescriptions(role.getID());
         for (int i = 0; i < prescriptionList.size(); i++) {
-            System.out.println("----------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println((i+1) + " : " + prescriptionList.get(i));
         }
         System.out.println("Do you want to Edit or Delete any Prescription? Y/N");
@@ -86,10 +86,10 @@ public class PatientPMS implements UserPMS {
             int PrescNum = Integer.parseInt(scanner.nextLine());
             if (PrescNum <= prescriptionList.size()) {
                 Prescription prescription = prescriptionList.get(PrescNum-1);
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("--------------------------------------------------------");
                 System.out.println("Press 1 --> Edit Prescription");
                 System.out.println("Press 2 --> Delete Prescription");
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("--------------------------------------------------------");
                 int editDelete = Integer.parseInt(scanner.nextLine());
                 switch (editDelete) {
                     case 1:
@@ -112,16 +112,16 @@ public class PatientPMS implements UserPMS {
     private void displayConfirmedPrescription() throws SQLException {
         List<Prescription> prescriptionList = patientService.displayConfirmedPrescriptions(role.getID());
         for (int i = 0; i < prescriptionList.size(); i++) {
-            System.out.println("----------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println((i+1) + " : " + prescriptionList.get(i));
         }
     }
 
     private void editPrescription(Prescription prescription) throws SQLException {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         System.out.println("Press 1 --> Delete a Medicine From Prescription");
         System.out.println("Press 2 --> Add a Medicine To Prescription");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         int choice = Integer.parseInt(scanner.nextLine());
         switch (choice) {
             case 1:

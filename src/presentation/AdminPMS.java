@@ -18,12 +18,12 @@ public class AdminPMS implements UserPMS {
     private Role role;
 
     public void firstMenu() throws SQLException {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         System.out.println("Press 1 --> Sign up ");
         System.out.println("Press 2 --> Sign in ");
         System.out.println("Press 3 --> Sign out ");
         System.out.println("Press 4 --> Exit ");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         int firstChoice = Integer.parseInt(scanner.nextLine());
         switch (firstChoice) {
             case 1:
@@ -47,13 +47,13 @@ public class AdminPMS implements UserPMS {
     }
 
     public void secondMenu() throws SQLException {//TODO add role Type in roles table & check if the user is admin/maybe a boolean would work
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         System.out.println("Press 1 --> Add New Medicine");
         System.out.println("Press 2 --> Delete a Medicine");
         System.out.println("Press 3 --> Edit Medicine Availability");
         System.out.println("Press 4 --> Confirm Patient Prescriptions ");
         System.out.println("Press 5 --> Previous Menu ");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         int secondChoice = Integer.parseInt(scanner.nextLine());
         switch (secondChoice) {
             case 1:
@@ -82,21 +82,22 @@ public class AdminPMS implements UserPMS {
         List<Prescription> prescriptionList = adminService.displayUnconfirmedPrescriptions();
         for (int i = 0; i < prescriptionList.size(); i++) {
             Prescription prescription = prescriptionList.get(i);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("--------------------------------------------------------");
             System.out.println((i + 1) + " " + prescription);
             System.out.println("Confirm Prescription No." + (i + 1) + " ?(Y/N)");
             String yesno = scanner.nextLine();
             if (yesno.equals("Y") || yesno.equals("y")) {
                 List<Medicine> medicineList = prescription.getMedicineList();
                 double totoalPrice = 0;
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
                 for (int j = 0; j < medicineList.size(); j++) {
-                    System.out.println("----------------------------------------------------------------------------------------");
                     System.out.println((j + 1) + " " + medicineList.get(j));
                     if(medicineList.get(j).isAvailable()){
                         totoalPrice += medicineList.get(j).getPrice();
                     }
                 }
                 System.out.println("Total Price of Prescription is: "+totoalPrice);
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
                 prescription.setTotalPrice(totoalPrice);
                 adminService.confirmPrescription(prescription);
             }
@@ -104,7 +105,7 @@ public class AdminPMS implements UserPMS {
     }
 
     private void addMedicine() throws SQLException {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("--------------------------------------------------------");
         System.out.println("Enter Generic Name: ");
         String gname = scanner.nextLine();
         System.out.println("Enter Commercial Name: ");
