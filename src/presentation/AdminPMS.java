@@ -47,7 +47,7 @@ public class AdminPMS implements UserPMS {
         }
     }
 
-    public void secondMenu() throws SQLException {//TODO add role Type in roles table & check if the user is admin/maybe a boolean would work
+    public void secondMenu() throws SQLException {
         System.out.println("--------------------------------------------------------");
         System.out.println("Press 1 --> Add New Medicine");
         System.out.println("Press 2 --> Delete a Medicine");

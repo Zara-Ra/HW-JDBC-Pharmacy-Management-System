@@ -54,22 +54,20 @@ public class PatientPMS implements UserPMS {
         System.out.println("--------------------------------------------------------");
 
         int secondChoice = Integer.parseInt(scanner.nextLine());
-        switch (secondChoice){
-            case 1:
+        switch (secondChoice) {
+            case 1 -> {
                 addPrescription();
                 secondMenu();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 displayAllUserPrescriptions();
                 secondMenu();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 displayConfirmedPrescription();
                 secondMenu();
-                break;
-            case 4:
-                firstMenu();
-                break;
+            }
+            case 4 -> firstMenu();
         }
     }
 
