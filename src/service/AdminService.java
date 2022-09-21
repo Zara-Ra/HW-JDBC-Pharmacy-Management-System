@@ -15,15 +15,15 @@ public class AdminService implements RoleService {
     private AdminService() {
     }
 
-    private static AdminService instance = new AdminService();
+    private static final AdminService instance = new AdminService();
 
     public static AdminService getInstance() {
         return instance;
     }
 
-    private PrescriptionDao prescriptionDao = PrescriptionDao.getInstance();
-    private MedicineDao medicineDao = MedicineDao.getInstance();
-    private RoleDao roleDao = RoleDao.getInstance();
+    private final PrescriptionDao prescriptionDao = PrescriptionDao.getInstance();
+    private final MedicineDao medicineDao = MedicineDao.getInstance();
+    private final RoleDao roleDao = RoleDao.getInstance();
 
     public List<Prescription> displayUnconfirmedPrescriptions() throws SQLException {
         boolean confirmedPresciptions = false;
@@ -65,7 +65,7 @@ public class AdminService implements RoleService {
     }
 
     public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
-        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
+        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum, prescription);
     }
 
     public boolean deleteMedicine(Medicine deleteMed) throws SQLException {

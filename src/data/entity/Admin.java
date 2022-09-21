@@ -3,10 +3,10 @@ package data.entity;
 import data.enums.RoleType;
 
 public class Admin extends Role {
-    String email;//TODO Validate .*@pharmacy.com
+    String email;
     RoleType roleType;
 
-    public Admin(String username, String password, String email,RoleType roleType) {
+    public Admin(String username, String password, String email, RoleType roleType) {
         super(username, password);
         this.email = email;
         this.roleType = roleType;
@@ -35,6 +35,6 @@ public class Admin extends Role {
 
     @Override
     public String toString() {
-        return "Admin :\t Username: "+getUsername()+"\t E-mail: "+email;
+        return "Admin :\t Username: " + getUsername() + "\t E-mail: " + email;
     }
 }

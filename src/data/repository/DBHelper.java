@@ -9,6 +9,7 @@ public class DBHelper {
     private static final String USER = "postgres";
     private static final String PASS = "zara12";
     private static Connection connection = makeConnection();
+
     private static Connection makeConnection() {
 
         try {
@@ -18,10 +19,12 @@ public class DBHelper {
         }
         return connection;
     }
-    public static Connection getConnection(){
+
+    public static Connection getConnection() {
         return connection;
     }
-    public void closeConnection(){
+
+    public void closeConnection() {
         try {
             connection.close();
         } catch (SQLException e) {

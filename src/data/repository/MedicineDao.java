@@ -13,13 +13,13 @@ public class MedicineDao {
     private MedicineDao() {
     }
 
-    private static MedicineDao instance = new MedicineDao();
+    private static final MedicineDao instance = new MedicineDao();
 
     public static MedicineDao getInstance() {
         return instance;
     }
 
-    private Connection connection = DBHelper.getConnection();
+    private final Connection connection = DBHelper.getConnection();
 
     public boolean addMedicine(Medicine medicine) throws SQLException {
         boolean result = false;
@@ -98,17 +98,17 @@ public class MedicineDao {
     public boolean deleteMedicine(Medicine deleteMed) throws SQLException {
         String sql = "DELETE FROM medicine WHERE generic_name = ? AND commercial_name = ? AND dose = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,deleteMed.getGenericName());
-        preparedStatement.setString(2,deleteMed.getCommercialName());
-        preparedStatement.setInt(3,deleteMed.getDose());
+        preparedStatement.setString(1, deleteMed.getGenericName());
+        preparedStatement.setString(2, deleteMed.getCommercialName());
+        preparedStatement.setInt(3, deleteMed.getDose());
         return preparedStatement.executeUpdate() > 0;
     }
 
     public boolean editMedicineAvailability(Medicine medicine) throws SQLException {
         String sql = "UPDATE medicine SET is_available = ? WHERE commercial_name = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setBoolean(1,medicine.isAvailable());
-        preparedStatement.setString(2,medicine.getCommercialName());
+        preparedStatement.setBoolean(1, medicine.isAvailable());
+        preparedStatement.setString(2, medicine.getCommercialName());
         return preparedStatement.executeUpdate() > 0;
     }
 }

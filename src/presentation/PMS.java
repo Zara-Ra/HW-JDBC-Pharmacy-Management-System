@@ -7,6 +7,7 @@ public class PMS {
     public static void main(String[] args) throws SQLException {
         welcome();
     }
+
     public static void welcome() throws SQLException {
         System.out.println("--------------------------------------------------------");
         System.out.println("-----    Welcome to Pharmacy Management System     -----");
@@ -16,7 +17,7 @@ public class PMS {
         System.out.println("--------------------------------------------------------");
         Scanner scanner = new Scanner(System.in);
         int role = Integer.parseInt(scanner.nextLine());
-        switch (role){
+        switch (role) {
             case 1:
                 AdminPMS adminPMS = new AdminPMS();
                 adminPMS.firstMenu();

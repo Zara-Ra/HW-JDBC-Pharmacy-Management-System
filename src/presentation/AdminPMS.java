@@ -8,14 +8,15 @@ import data.enums.MedType;
 import data.enums.RoleType;
 import data.enums.UsageType;
 import service.AdminService;
+import validation.Validate;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class AdminPMS implements UserPMS {
-    private AdminService adminService = AdminService.getInstance();
-    private Scanner scanner = new Scanner(System.in);
+    private final AdminService adminService = AdminService.getInstance();
+    private final Scanner scanner = new Scanner(System.in);
     private Role role;
 
     public void firstMenu() throws SQLException {
@@ -28,14 +29,20 @@ public class AdminPMS implements UserPMS {
         int firstChoice = Integer.parseInt(scanner.nextLine());
         switch (firstChoice) {
             case 1:
-                signUp();
-                secondMenu();
+                if (signUp())
+                    secondMenu();
+                else {
+                    printError("Unable to Sign Up as Admin");
+                    firstMenu();
+                }
                 break;
             case 2:
                 if (signIn())
                     secondMenu();
-                else
+                else {
+                    printError("Unable to Sign In as Admin");
                     firstMenu();
+                }
                 break;
             case 3:
                 signOut();
@@ -86,18 +93,21 @@ public class AdminPMS implements UserPMS {
             System.out.println("--------------------------------------------------------");
             System.out.println((i + 1) + " " + prescription);
             System.out.println("Confirm Prescription No." + (i + 1) + " ?(Y/N)");
-            String yesno = scanner.nextLine();
-            if (yesno.equals("Y") || yesno.equals("y")) {
+            String yesNo = scanner.nextLine();
+            if (yesNo.equals("Y") || yesNo.equals("y")) {
                 List<Medicine> medicineList = prescription.getMedicineList();
                 double totoalPrice = 0;
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
                 for (int j = 0; j < medicineList.size(); j++) {
                     System.out.println((j + 1) + " " + medicineList.get(j));
-                    if(medicineList.get(j).isAvailable()){
+                    if (medicineList.get(j).isAvailable()) {
                         totoalPrice += medicineList.get(j).getPrice();
                     }
                 }
-                System.out.println("Total Price of Prescription is: "+totoalPrice);
+                if (totoalPrice != 0)
+                    System.out.println("Total Price of Prescription is: " + totoalPrice);
+                else
+                    printError("Non of the Medicines of the Prescription is Available");
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
                 prescription.setTotalPrice(totoalPrice);
                 adminService.confirmPrescription(prescription);
@@ -134,7 +144,11 @@ public class AdminPMS implements UserPMS {
         System.out.println("Enter Medicine Price: ");
         double price = Double.parseDouble(scanner.nextLine());
         Medicine medicine = new Medicine(isAvalable, gname, cname, dose, UsageType.values()[usageType], MedType.values()[medType], price);
-        medicine = adminService.addMedicine(medicine);
+        if (adminService.addMedicine(medicine) != null)
+            System.out.println("Medicine added Successfully!");
+        else
+            printError("Unable to Add Medicine");
+
     }
 
     private void deleteMedicine() throws SQLException {
@@ -148,21 +162,22 @@ public class AdminPMS implements UserPMS {
         if (adminService.deleteMedicine(deleteMed))
             System.out.println("Medicine Deleted Successfully");
         else
-            System.out.println("Unable to Delete Medicine");
+            printError("Unable to Delete Medicine");
     }
-    private void editMedicineAvailability() throws SQLException{
+
+    private void editMedicineAvailability() throws SQLException { //TODO edit medicine price
         System.out.println("Enter Commercial Name: ");
         String cname = scanner.nextLine();
         System.out.println("Is This Medicine Currently Available? (Y/N)");
         String yesNo = scanner.nextLine();
         boolean isAvailable = false;
-        if(yesNo.equals("Y") || yesNo.equals("y"))
+        if (yesNo.equals("Y") || yesNo.equals("y"))
             isAvailable = false;
-        Medicine editMed = new Medicine(isAvailable,cname);
-        if(adminService.editMedicineAvailablity(editMed))
+        Medicine editMed = new Medicine(isAvailable, cname);
+        if (adminService.editMedicineAvailablity(editMed))
             System.out.println("Medicine Edited Successfully");
         else
-            System.out.println("Unable to Edit Medicine");
+            printError("Unable to Edit Medicine Availability");
     }
 
     public boolean signIn() throws SQLException {
@@ -171,23 +186,32 @@ public class AdminPMS implements UserPMS {
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
         role = adminService.signIn(username, password);
-        if (role != null)
-            return true;
-        return false;
+        return role != null;
     }
 
-    public void signUp() throws SQLException {
+    public boolean signUp() throws SQLException {
+        boolean result = false;
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
         System.out.println("Enter email: ");
         String email = scanner.nextLine();
-        role = new Admin(username, password, email, RoleType.ADMIN);
-        role = adminService.signUp(role);
+        if (Validate.isAdminEmailValid(email)) {
+            role = new Admin(username, password, email, RoleType.ADMIN);
+            role = adminService.signUp(role);
+            if (role != null)
+                result = true;
+        } else
+            printError("Invalid Admin Email");
+        return result;
     }
 
     public void signOut() {
         adminService.signOut(role);
+    }
+
+    private void printError(String error) {
+        System.out.println(error);
     }
 }

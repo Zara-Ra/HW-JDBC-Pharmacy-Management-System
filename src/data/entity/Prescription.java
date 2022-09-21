@@ -15,7 +15,7 @@ public class Prescription {
         this.medicineList = medicineList;
     }
 
-    public Prescription(Patient patient, List<Medicine> medicineList,boolean isConfirmed) {
+    public Prescription(Patient patient, List<Medicine> medicineList, boolean isConfirmed) {
         this.patient = patient;
         this.medicineList = medicineList;
         this.isConfirmed = isConfirmed;
@@ -72,10 +72,10 @@ public class Prescription {
     public String toString() {
         String meds = "";
         for (int i = 0; i < medicineList.size(); i++) {
-            meds += medicineList.get(i).toString()+"\n";
+            meds += medicineList.get(i).toString() + "\n";
         }
         return "Prescription Info:" +
-                " Total Price = " + totalPrice+
+                " Total Price = " + totalPrice +
                 "\n Medicenes \n" + meds;
     }
 }

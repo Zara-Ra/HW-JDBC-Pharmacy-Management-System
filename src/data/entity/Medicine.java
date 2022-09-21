@@ -116,10 +116,9 @@ public class Medicine {
     @Override
     public String toString() {
         String availability = "";
-        if(isAvailable){
+        if (isAvailable) {
             availability += "Available";
-        }
-        else
+        } else
             availability += "Not Available";
         return "\tGeneric Name: " + genericName +
                 "\tCommercial Name: " + commercialName +

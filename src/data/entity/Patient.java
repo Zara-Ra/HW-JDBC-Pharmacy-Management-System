@@ -1,9 +1,9 @@
 package data.entity;
 
 public class Patient extends Role {
-    String phone;//Todo validate
+    String phone;
     String address;
-    String email;//Todo validate email@domain.com
+    String email;
 
     public Patient(int ID, String username, String password, String phone, String address, String email) {
         super(ID, username, password);
@@ -49,6 +49,6 @@ public class Patient extends Role {
 
     @Override
     public String toString() {
-        return "Patient :\t Username: "+getUsername()+"\t Phone Number: "+phone+"\t Address: "+address+"\t E-mail: "+email;
+        return "Patient :\t Username: " + getUsername() + "\t Phone Number: " + phone + "\t Address: " + address + "\t E-mail: " + email;
     }
 }

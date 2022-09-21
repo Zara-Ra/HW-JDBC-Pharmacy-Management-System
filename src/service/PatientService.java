@@ -14,14 +14,14 @@ public class PatientService implements RoleService {
     private PatientService() {
     }
 
-    private static PatientService instance = new PatientService();
+    private static final PatientService instance = new PatientService();
 
     public static PatientService getInstance() {
         return instance;
     }
 
-    private PrescriptionDao prescriptionDao = PrescriptionDao.getInstance();
-    private RoleDao roleDao = RoleDao.getInstance();
+    private final PrescriptionDao prescriptionDao = PrescriptionDao.getInstance();
+    private final RoleDao roleDao = RoleDao.getInstance();
 
     public void addPrescription(Prescription prescription) throws SQLException {
         prescriptionDao.addPrescription(prescription);
@@ -31,24 +31,25 @@ public class PatientService implements RoleService {
         prescriptionDao.deletePrescription(prescription);
     }
 
-    public List<Prescription> displayConfirmedPrescriptions(int patientID) throws SQLException {
-        return prescriptionDao.allConfirmedPrescriptions(patientID);
+    public List<Prescription> confirmedPrescriptions(int patientID) throws SQLException {
+        return prescriptionDao.confirmedPrescriptions(patientID);
     }
-    public List<Prescription> displayAllUserPrescriptions(int patientID) throws SQLException {
+
+    public List<Prescription> allUserPrescriptions(int patientID) throws SQLException {
         return prescriptionDao.allUserPrescriptions(patientID);
     }
 
     public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
-        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum,prescription);
+        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum, prescription);
     }
 
-    public void addMedicineToPrescription(Prescription prescription, Medicine medicine)throws SQLException  {
-        prescriptionDao.addMedicineToPrescription(prescription,medicine);
+    public void addMedicineToPrescription(Prescription prescription, Medicine medicine) throws SQLException {
+        prescriptionDao.addMedicineToPrescription(prescription, medicine);
     }
 
     @Override
     public Role signIn(String username, String password) throws SQLException {
-        return roleDao.signIn(username , password,RoleType.PATIENT);
+        return roleDao.signIn(username, password, RoleType.PATIENT);
     }
 
     @Override
