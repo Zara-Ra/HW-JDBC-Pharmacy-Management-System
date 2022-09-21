@@ -19,10 +19,12 @@ public class PatientPMS implements UserPMS {
 
     public void firstMenu() throws SQLException {
         System.out.println("--------------------------------------------------------");
-        System.out.println("Press 1 --> Sign up ");
-        System.out.println("Press 2 --> Sign in ");
-        System.out.println("Press 3 --> Sign out ");
-        System.out.println("Press 4 --> Exit ");
+        if(role != null)
+            System.out.println("-------------------You are Signed In as "+role.getUsername()+" -----------------------");
+        System.out.println("  Press 1 --> Sign up ");
+        System.out.println("  Press 2 --> Sign in ");
+        System.out.println("  Press 3 --> Sign out ");
+        System.out.println("  Press 4 --> Exit ");
         System.out.println("--------------------------------------------------------");
 
         int firstChoice = Integer.parseInt(scanner.nextLine());
@@ -47,7 +49,7 @@ public class PatientPMS implements UserPMS {
                 signOut();
                 PMS.welcome();
                 break;
-            case 4:
+            default:
                 System.exit(0);
                 break;
         }
@@ -59,28 +61,35 @@ public class PatientPMS implements UserPMS {
 
     public void secondMenu() throws SQLException {
         System.out.println("--------------------------------------------------------");
-        System.out.println("Press 1 --> Add a New Prescription");
-        System.out.println("Press 2 --> Edit/Delete Prescription");
-        System.out.println("Press 3 --> Confirmed Prescriptions");
-        System.out.println("Press 4 --> Previous Menu");
+        System.out.println("-------------------You are Signed In as "+role.getUsername()+" -----------------------");
+        System.out.println("  Press 1 --> Add a New Prescription");
+        System.out.println("  Press 2 --> Edit/Delete Prescription");
+        System.out.println("  Press 3 --> Confirmed Prescriptions");
+        System.out.println("  Press 4 --> Previous Menu");
         System.out.println("--------------------------------------------------------");
 
         int secondChoice = Integer.parseInt(scanner.nextLine());
         switch (secondChoice) {
-            case 1: {
+            case 1:
                 addPrescription();
                 secondMenu();
-            }
-            case 2: {
+                break;
+            case 2:
                 modifyPrescriptions();
                 secondMenu();
-            }
-            case 3: {
+                break;
+
+            case 3:
                 displayConfirmedPrescription();
                 secondMenu();
-            }
+                break;
+
             case 4:
                 firstMenu();
+                break;
+            default:
+                System.exit(0);
+                break;
         }
     }
 
@@ -95,8 +104,8 @@ public class PatientPMS implements UserPMS {
             if (selectedPrescription > 0 && selectedPrescription <= prescriptionList.size()) {
                 Prescription prescription = prescriptionList.get(selectedPrescription - 1);
                 System.out.println("--------------------------------------------------------");
-                System.out.println("Press 1 --> Edit Prescription");
-                System.out.println("Press 2 --> Delete Prescription");
+                System.out.println("  Press 1 --> Edit Prescription");
+                System.out.println("  Press 2 --> Delete Prescription");
                 System.out.println("--------------------------------------------------------");
                 int editDelete = Integer.parseInt(scanner.nextLine());
                 switch (editDelete) {
@@ -124,13 +133,17 @@ public class PatientPMS implements UserPMS {
 
     private void displayConfirmedPrescription() throws SQLException {
         List<Prescription> prescriptionList = patientService.confirmedPrescriptions((Patient) role);
-        printPrescriptions(prescriptionList);
+        System.out.println("--------------------------------------------------------");
+        if(prescriptionList.size() == 0)
+            printError("No Confirmed Prescriptions");
+        else
+            printPrescriptions(prescriptionList);
     }
 
     private void editPrescription(Prescription prescription) throws SQLException {
         System.out.println("--------------------------------------------------------");
-        System.out.println("Press 1 --> Delete a Medicine From Prescription");
-        System.out.println("Press 2 --> Add a Medicine To Prescription");
+        System.out.println("  Press 1 --> Delete a Medicine From Prescription");
+        System.out.println("  Press 2 --> Add a Medicine To Prescription");
         System.out.println("--------------------------------------------------------");
         int choice = Integer.parseInt(scanner.nextLine());
         switch (choice) {
@@ -176,6 +189,7 @@ public class PatientPMS implements UserPMS {
 
     private void deletePrescription(Prescription prescription) throws SQLException {
         patientService.deletePrescription(prescription);
+        System.out.println("Prescription Deleted Successfully");
     }
 
     private void addPrescription() throws SQLException {
@@ -225,7 +239,11 @@ public class PatientPMS implements UserPMS {
                 role = patientService.signUp(role);
                 result = true;
             }
+            else
+                printError("Invalid Phone Number");
         }
+        else
+            printError("Invalid Email");
         return result;
     }
 

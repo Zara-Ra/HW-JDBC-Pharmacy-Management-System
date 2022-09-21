@@ -12,8 +12,8 @@ public class PMS {
         System.out.println("--------------------------------------------------------");
         System.out.println("-----    Welcome to Pharmacy Management System     -----");
         System.out.println("---------------------------------------------------zara-");
-        System.out.println("Press 1 --> Admin");
-        System.out.println("Press 2 --> Patient");
+        System.out.println("  Press 1 --> Admin");
+        System.out.println("  Press 2 --> Patient");
         System.out.println("--------------------------------------------------------");
         Scanner scanner = new Scanner(System.in);
         int role = Integer.parseInt(scanner.nextLine());

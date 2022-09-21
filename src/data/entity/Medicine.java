@@ -117,9 +117,9 @@ public class Medicine {
     public String toString() {
         String availability = "";
         if (isAvailable) {
-            availability += "Available";
+            availability += " ++ Available ++";
         } else
-            availability += "Not Available";
+            availability += " -- Not Available --";
         return "\tGeneric Name: " + genericName +
                 "\tCommercial Name: " + commercialName +
                 "\tDose: " + dose +

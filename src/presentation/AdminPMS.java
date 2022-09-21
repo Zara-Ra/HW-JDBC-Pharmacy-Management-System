@@ -21,10 +21,12 @@ public class AdminPMS implements UserPMS {
 
     public void firstMenu() throws SQLException {
         System.out.println("--------------------------------------------------------");
-        System.out.println("Press 1 --> Sign up ");
-        System.out.println("Press 2 --> Sign in ");
-        System.out.println("Press 3 --> Sign out ");
-        System.out.println("Press 4 --> Exit ");
+        if(role != null)
+            System.out.println("---------------- You are Signed In is Admin ------------");
+        System.out.println("  Press 1 --> Sign up ");
+        System.out.println("  Press 2 --> Sign in ");
+        System.out.println("  Press 3 --> Sign out ");
+        System.out.println("  Press 4 --> Exit ");
         System.out.println("--------------------------------------------------------");
         int firstChoice = Integer.parseInt(scanner.nextLine());
         switch (firstChoice) {
@@ -48,7 +50,7 @@ public class AdminPMS implements UserPMS {
                 signOut();
                 PMS.welcome();
                 break;
-            case 4:
+            default:
                 System.exit(0);
                 break;
         }
@@ -56,11 +58,12 @@ public class AdminPMS implements UserPMS {
 
     public void secondMenu() throws SQLException {
         System.out.println("--------------------------------------------------------");
-        System.out.println("Press 1 --> Add New Medicine");
-        System.out.println("Press 2 --> Delete a Medicine");
-        System.out.println("Press 3 --> Edit Medicine Availability");
-        System.out.println("Press 4 --> Confirm Patient Prescriptions ");
-        System.out.println("Press 5 --> Previous Menu ");
+        System.out.println("---------------- You are Signed In is Admin ------------");
+        System.out.println("  Press 1 --> Add New Medicine");
+        System.out.println("  Press 2 --> Delete a Medicine");
+        System.out.println("  Press 3 --> Edit Medicine Availability");
+        System.out.println("  Press 4 --> Confirm Patient Prescriptions ");
+        System.out.println("  Press 5 --> Previous Menu ");
         System.out.println("--------------------------------------------------------");
         int secondChoice = Integer.parseInt(scanner.nextLine());
         switch (secondChoice) {
@@ -83,11 +86,19 @@ public class AdminPMS implements UserPMS {
             case 5:
                 firstMenu();
                 break;
+            default:
+                System.exit(0);
+                break;
         }
     }
 
     private void displayUnconfirmedPrescription() throws SQLException {
         List<Prescription> prescriptionList = adminService.unconfirmedPrescriptions();
+        if(prescriptionList.size() == 0){
+            System.out.println("--------------------------------------------------------");
+            printError("There are No Unconfirmed Prescriptions");
+            return;
+        }
         for (int i = 0; i < prescriptionList.size(); i++) {
             Prescription prescription = prescriptionList.get(i);
             System.out.println("--------------------------------------------------------");
@@ -172,7 +183,7 @@ public class AdminPMS implements UserPMS {
         String yesNo = scanner.nextLine();
         boolean isAvailable = false;
         if (yesNo.equals("Y") || yesNo.equals("y"))
-            isAvailable = false;
+            isAvailable = true;
         Medicine editMed = new Medicine(isAvailable, cname);
         if (adminService.editMedicineAvailablity(editMed))
             System.out.println("Medicine Edited Successfully");

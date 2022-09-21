@@ -2,7 +2,7 @@ package validation;
 
 public class Validate {
     public static boolean phoneNumberValid(String phoneNumber) {
-        return !phoneNumber.equals("") && phoneNumber.matches("^[\\d]{3}-[\\d]{7,9}$");
+        return !phoneNumber.equals("") && phoneNumber.matches("^[\\d]{3}-[\\d]{7,9}$") || phoneNumber.matches("^09[\\d]{9}$");
     }
 
     public static boolean isEmailValid(String email) {
