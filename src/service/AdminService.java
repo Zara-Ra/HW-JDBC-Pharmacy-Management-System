@@ -25,9 +25,9 @@ public class AdminService implements RoleService {
     private final MedicineDao medicineDao = MedicineDao.getInstance();
     private final RoleDao roleDao = RoleDao.getInstance();
 
-    public List<Prescription> displayUnconfirmedPrescriptions() throws SQLException {
-        boolean confirmedPresciptions = false;
-        return prescriptionDao.allPrescription(confirmedPresciptions);
+    public List<Prescription> unconfirmedPrescriptions() throws SQLException {
+        boolean isConfirmed = false;
+        return prescriptionDao.allPrescriptions(isConfirmed);
     }
 
     public boolean confirmPrescription(Prescription prescription) throws SQLException {
@@ -36,7 +36,7 @@ public class AdminService implements RoleService {
 
     public Medicine addMedicine(Medicine medicine) throws SQLException {
         if (medicineDao.addMedicine(medicine)) {
-            int medicineID = medicineDao.findMedID(medicine.getCommercialName());
+            int medicineID = medicineDao.findID(medicine.getCommercialName());
             medicine.setID(medicineID);
             return medicine;
         }
@@ -57,15 +57,11 @@ public class AdminService implements RoleService {
     @Override
     public Role signUp(Role newRole) throws SQLException {
         if (roleDao.signUp(newRole)) {
-            int roleID = roleDao.findRoleID(newRole.getUsername());
+            int roleID = roleDao.findID(newRole.getUsername());
             newRole.setID(roleID);
             return newRole;
         }
         return null;
-    }
-
-    public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
-        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum, prescription);
     }
 
     public boolean deleteMedicine(Medicine deleteMed) throws SQLException {

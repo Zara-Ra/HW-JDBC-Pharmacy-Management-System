@@ -25,11 +25,11 @@ public class PrescriptionDao {
     private final RoleDao roleDao = RoleDao.getInstance();
     private final Connection connection = DBHelper.getConnection();
 
-    public List<Prescription> allPrescription(boolean confirmed) throws SQLException {
+    public List<Prescription> allPrescriptions(boolean isConfirmed) throws SQLException {
         List<Prescription> prescriptionList = new ArrayList<>();
         String sql = "SELECT id,patient_id,med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10 FROM prescription WHERE is_confirmed = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setBoolean(1, confirmed);
+        preparedStatement.setBoolean(1, isConfirmed);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             int prescriptionID = resultSet.getInt(1);
@@ -107,7 +107,9 @@ public class PrescriptionDao {
     }
 
     public void addMedicineToPrescription(Prescription prescription, Medicine medicine) throws SQLException {
-        int emptyPosition = findEmptyMedicine(prescription);
+        int emptyPosition = findEmptyMedicineColumn(prescription);
+        if(emptyPosition > 10)
+            return;
         String emptyColumn = "med_id_" + emptyPosition;
         String sql = "UPDATE prescription SET " + emptyColumn + " = ? , is_confirmed = false WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -116,7 +118,7 @@ public class PrescriptionDao {
         preparedStatement.executeUpdate();
     }
 
-    public int findEmptyMedicine(Prescription prescription) throws SQLException {
+    public int findEmptyMedicineColumn(Prescription prescription) throws SQLException {
         int result = 0;
         String sql = "SELECT med_id_1,med_id_2,med_id_3,med_id_4,med_id_5,med_id_6,med_id_7,med_id_8,med_id_9,med_id_10 FROM prescription WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

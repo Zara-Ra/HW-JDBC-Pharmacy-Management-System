@@ -87,7 +87,7 @@ public class AdminPMS implements UserPMS {
     }
 
     private void displayUnconfirmedPrescription() throws SQLException {
-        List<Prescription> prescriptionList = adminService.displayUnconfirmedPrescriptions();
+        List<Prescription> prescriptionList = adminService.unconfirmedPrescriptions();
         for (int i = 0; i < prescriptionList.size(); i++) {
             Prescription prescription = prescriptionList.get(i);
             System.out.println("--------------------------------------------------------");
@@ -165,7 +165,7 @@ public class AdminPMS implements UserPMS {
             printError("Unable to Delete Medicine");
     }
 
-    private void editMedicineAvailability() throws SQLException { //TODO edit medicine price
+    private void editMedicineAvailability() throws SQLException {
         System.out.println("Enter Commercial Name: ");
         String cname = scanner.nextLine();
         System.out.println("Is This Medicine Currently Available? (Y/N)");

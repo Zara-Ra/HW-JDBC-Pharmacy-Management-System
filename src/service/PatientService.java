@@ -1,6 +1,7 @@
 package service;
 
 import data.entity.Medicine;
+import data.entity.Patient;
 import data.entity.Prescription;
 import data.entity.Role;
 import data.enums.RoleType;
@@ -31,16 +32,16 @@ public class PatientService implements RoleService {
         prescriptionDao.deletePrescription(prescription);
     }
 
-    public List<Prescription> confirmedPrescriptions(int patientID) throws SQLException {
-        return prescriptionDao.confirmedPrescriptions(patientID);
+    public List<Prescription> confirmedPrescriptions(Patient patient) throws SQLException {
+        return prescriptionDao.confirmedPrescriptions(patient.getID());
     }
 
-    public List<Prescription> allUserPrescriptions(int patientID) throws SQLException {
-        return prescriptionDao.allUserPrescriptions(patientID);
+    public List<Prescription> allUserPrescriptions(Patient patient) throws SQLException {
+        return prescriptionDao.allUserPrescriptions(patient.getID());
     }
 
-    public void deleteMedicineFromPrescription(int deleteMedicineNum, Prescription prescription) throws SQLException {
-        prescriptionDao.deleteMedicineFromPrescription(deleteMedicineNum, prescription);
+    public void deleteMedicineFromPrescription(int deleteMedicine, Prescription prescription) throws SQLException {
+        prescriptionDao.deleteMedicineFromPrescription(deleteMedicine, prescription);
     }
 
     public void addMedicineToPrescription(Prescription prescription, Medicine medicine) throws SQLException {
@@ -61,7 +62,7 @@ public class PatientService implements RoleService {
     @Override
     public Role signUp(Role newRole) throws SQLException {
         if (roleDao.signUp(newRole)) {
-            int roleID = roleDao.findRoleID(newRole.getUsername());
+            int roleID = roleDao.findID(newRole.getUsername());
             newRole.setID(roleID);
             return newRole;
         }

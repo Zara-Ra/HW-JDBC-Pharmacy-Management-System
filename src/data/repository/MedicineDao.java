@@ -36,7 +36,7 @@ public class MedicineDao {
 
     }
 
-    public int findMedID(String commercialName) throws SQLException {
+    public int findID(String commercialName) throws SQLException {
         int result = 0;
         String sql = "SELECT id FROM medicine WHERE commercial_name = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -87,13 +87,6 @@ public class MedicineDao {
         }
         return medicine;
     }
-
-    /*public void setMedicineAvailable(Medicine medicine) throws SQLException {
-        String sql = "UPDATE medicine SET is_available = true WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,medicine.getID());
-        preparedStatement.executeUpdate();
-    }*/
 
     public boolean deleteMedicine(Medicine deleteMed) throws SQLException {
         String sql = "DELETE FROM medicine WHERE generic_name = ? AND commercial_name = ? AND dose = ?";

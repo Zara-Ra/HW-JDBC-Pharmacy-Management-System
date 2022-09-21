@@ -1,7 +1,7 @@
 package validation;
 
 public class Validate {
-    public static boolean isphoneNumberValid(String phoneNumber) {
+    public static boolean phoneNumberValid(String phoneNumber) {
         return !phoneNumber.equals("") && phoneNumber.matches("^[\\d]{3}-[\\d]{7,9}$");
     }
 

@@ -85,7 +85,7 @@ public class PatientPMS implements UserPMS {
     }
 
     private void modifyPrescriptions() throws SQLException {
-        List<Prescription> prescriptionList = patientService.allUserPrescriptions(role.getID());
+        List<Prescription> prescriptionList = patientService.allUserPrescriptions((Patient) role);
         printPrescriptions(prescriptionList);
         System.out.println("Do you want to Edit or Delete any Prescription? Y/N");
         String yesNo = scanner.nextLine();
@@ -123,7 +123,7 @@ public class PatientPMS implements UserPMS {
     }
 
     private void displayConfirmedPrescription() throws SQLException {
-        List<Prescription> prescriptionList = patientService.confirmedPrescriptions(role.getID());
+        List<Prescription> prescriptionList = patientService.confirmedPrescriptions((Patient) role);
         printPrescriptions(prescriptionList);
     }
 
@@ -141,18 +141,26 @@ public class PatientPMS implements UserPMS {
                 patientService.deleteMedicineFromPrescription(deleteMedicineNum, prescription);
                 prescription.getMedicineList().remove(deleteMedicineNum - 1);
                 System.out.println("Medicine Deleted from Prescription");
+                if (prescription.getMedicineList().size() == 0) {
+                    System.out.println("Your Prescription Contains no Medicines and will be deleted automatically");
+                    patientService.deletePrescription(prescription);
+                }
+
                 break;
             case 2:
-                System.out.println("Enter the Commercial Name of the Medicine: ");
-                String commercialName = scanner.nextLine();
-                Medicine medicine = patientService.findMedicine(commercialName);
-                if(medicine != null) {
-                    prescription.getMedicineList().add(medicine);
-                    patientService.addMedicineToPrescription(prescription, medicine);
-                    System.out.println("Medicine Added to Prescription");
+                if (prescription.getMedicineList().size() >= 10)
+                    printError("This Prescription already contains 10 prescriptions");
+                else {
+                    System.out.println("Enter the Commercial Name of the Medicine: ");
+                    String commercialName = scanner.nextLine();
+                    Medicine medicine = patientService.findMedicine(commercialName);
+                    if (medicine != null) {
+                        prescription.getMedicineList().add(medicine);
+                        patientService.addMedicineToPrescription(prescription, medicine);
+                        System.out.println("Medicine Added to Prescription");
+                    } else
+                        printError(commercialName + " is Not a Valid Medicine Name");
                 }
-                else
-                    printError(commercialName +" is Not a Valid Medicine Name");
                 break;
             default:
                 printError("Invalid Input Number");
@@ -210,7 +218,7 @@ public class PatientPMS implements UserPMS {
         if (Validate.isEmailValid(email)) {
             System.out.println("Enter phone number: ");
             String phone = scanner.nextLine();
-            if (Validate.isphoneNumberValid(phone)) {
+            if (Validate.phoneNumberValid(phone)) {
                 System.out.println("Enter address: ");
                 String address = scanner.nextLine();
                 role = new Patient(username, password, email, phone, address);
