@@ -1,28 +1,31 @@
 # HW-JDBC-Pharmacy-Management-System
+## Pharmacy Management Console Application
+### Overview
+The Pharmacy Management Console Application is a versatile solution designed to efficiently manage pharmacy operations. It caters to two distinct roles: Patient and Admin, each with specific functionalities. Here's an overview of the application's key features:
 
-In this project I have used JDBC to connect to the Postgresql database.
-This console application manages a pharmacy, there are two roles Patient and Admin.
+### Features
+### Patient Role
+- Add Prescription: Patients can create prescriptions by entering the required data.
 
-Patient :
+- View Confirmed Prescriptions: Patients can view confirmed prescriptions, including the price for each item and the total price.
 
-  •Add prescription by entering the required data
+- Edit Prescription: Patients have the option to edit prescriptions they have created.
 
-  •See confirmed prescriptions with the price for each item and total price
+- Delete Prescription: Patients can remove prescriptions if they are no longer needed.
 
-  •Edit prescription
+### Admin Role
+- View All Prescriptions: Admins have access to all prescriptions registered by all patients.
 
-  •Delete prescription  
-  
-    Each prescription consists of at least one item 
-    Patient can enter at most 10 items for each prescription
+- Confirm Prescriptions: Admins can confirm each prescription individually, marking them as processed.
 
-Admin:
-  
-  •See all the prescriptions registered by all patients
+- Manage Items: After confirming a prescription, the admin must specify which items exist and which do not (items have a boolean field as 'doesExist').
 
-  •Confirm each of them one by one.
+- Specify Item Prices: Admins must set prices for each existing item in the prescription. Once this is done, the prescription is prepared and can be viewed by the patient.
 
-  •After confirming the prescription, the admin must specify which items exists, which not(so items must have a boolean field as 'doesExist')
+### Prescription Details
+- Each prescription must contain at least one item.
 
-  •Admin must specify the price of each existing item. after that, the prescription is prepared and can be seen by the patient
+- Patients can enter up to a maximum of 10 items for each prescription.
 
+### Database Connectivity with JDBC
+- The application utilizes JDBC (Java Database Connectivity) to establish connections to the PostgreSQL database, ensuring seamless data management.
